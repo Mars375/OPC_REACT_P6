@@ -22,10 +22,16 @@ export const getPhotographersId = () => {
 
 // get photographer data from JSON file
 export const getPhotographer = async () => {
-  console.log('test')
   const { photographers } = await getData();
   const photographerId = getPhotographersId();
   return photographers.find((photographer) => photographer.id == photographerId);
+}
+
+// get photographer media from JSON file
+export const getPhotographerMedia = async () => {
+  const { media } = await getData();
+  const photographerId = getPhotographersId();
+  return media.filter((media) => media.photographerId == photographerId);
 }
 
 // get photographers data from JSON file

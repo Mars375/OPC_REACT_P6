@@ -1,11 +1,12 @@
 import { getPhotographers } from "../../helpers/query.js";
+import { photographerCardTemplate } from "../templates/photographerCard.js"
 
 // Display photographers data with Template
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
 
   photographers.forEach((photographer) => {
-    const photographerModel = photographerTemplate(photographer);
+    const photographerModel = photographerCardTemplate(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
     photographersSection.appendChild(userCardDOM);
   });
