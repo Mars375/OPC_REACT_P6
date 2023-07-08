@@ -1,53 +1,31 @@
+import { createElement } from '../utils/createDOM.js';
+
 export function photographerCardTemplate(data) {
   const { name, portrait, id, city, country, tagline, price } = data;
 
   function getUserCardDOM() {
-    // Create new article
-    const article = document.createElement('article');
 
-    // Create new link
+    // Create all elements using createElement function
+    const article = createElement('article');
+    // Create URL for the photographer page
     const url = `./photographer.html?id=${id}`;
-    const link = document.createElement('a');
-    link.setAttribute('href', url)
+    const link = createElement('a', null, { href: url });
+    const div = createElement('div', null, { tabindex: '0' });
+    const img = createElement('img', null, { src: `./assets/photographers/${portrait}`, alt: name });
+    const h2 = createElement('h2', name);
+    const section = createElement('section');
+    const location = createElement('p', `${city}, ${country}`);
+    const tag = createElement('p', tagline);
+    const pricePerDay = createElement('p', `${price}€/jour`);
 
-    // Create new div
-    const div = document.createElement('div');
-    div.setAttribute('tabindex', '0');
+    // Append all element to their respective container
+    div.append(img, h2);
+    section.append(location, tag, pricePerDay);
+    link.append(div);
+    article.append(link, section);
 
-    // Create img element
-    const img = document.createElement('img');
-    img.setAttribute('src', `./assets/photographers/${portrait}`);
-    img.setAttribute('alt', `${name}`);
-
-    // Create title element for name
-    const h2 = document.createElement('h2')
-    h2.textContent = name;
-
-    // Create section element for details section
-    const section = document.createElement('section');
-
-    // Create paragraph element for location
-    const location = document.createElement('p');
-    location.textContent = `${city}, ${country}`;
-
-    // Create paragraph element for tagline
-    const tag = document.createElement('p');
-    tag.textContent = tagline;
-
-    // Create paragraph element for price
-    const pricePerDay = document.createElement('p');
-    pricePerDay.textContent = `${price}€/jour`;
-
-    // Append elements
-    div.appendChild(img)
-    div.appendChild(h2)
-    section.appendChild(location)
-    section.appendChild(tag)
-    section.appendChild(pricePerDay)
-    link.appendChild(div)
-    article.appendChild(link)
-    article.appendChild(section)
-    return article
+    return article;
   }
-  return { getUserCardDOM }
+
+  return { getUserCardDOM };
 }

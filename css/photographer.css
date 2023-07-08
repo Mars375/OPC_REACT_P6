@@ -117,7 +117,8 @@
 .media_container {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	gap: 40px;
+	justify-content: center;
 	margin: 0 100px;
 }
 
@@ -131,7 +132,8 @@
 	height: 300px;
 }
 
-.media_element_picture img {
+.media_element_picture img,
+video {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;

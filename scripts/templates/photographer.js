@@ -1,65 +1,55 @@
+import { createElement } from "../utils/createDOM.js";
 
 export const photographerTemplate = (data) => {
-  const { name, tagline, city, country, portrait, price } = data
+  const { name, tagline, city, country, portrait, price } = data;
 
   // Fill header with Photographer Data
   const getHeaderDOM = () => {
-
-    // Get DOM Element
     const photographerHeader = document.querySelector(".photograph-header");
-    const photographerName = document.querySelector('.photograph-name')
-    const photographInfo = document.querySelector('.photograph-info')
+    const photographerName = document.querySelector('.photograph-name');
+    const photographInfo = document.querySelector('.photograph-info');
 
-
-    //Create element
-    const photographerTagline = document.createElement("p");
-    const photographerLocation = document.createElement("p");
-    const photographerPortrait = document.createElement("img");
-
-    // Add content
+    // Set photographer name
     photographerName.textContent = name;
-    photographerTagline.textContent = tagline;
-    photographerLocation.textContent = `${city}, ${country}`;
-    photographerPortrait.setAttribute('src', `./assets/photographers/${portrait}`);
-    photographerPortrait.setAttribute('alt', `${name}` || '');
 
-    //Add style
-    photographerName.classList.add('photograph-name');
+    // Append tagline and location paragraphs to photographInfo
+    photographInfo.append(
+      createElement("p", tagline),
+      createElement("p", `${city}, ${country}`)
+    );
 
-    // Append elements
-    photographInfo.appendChild(photographerLocation);
-    photographInfo.appendChild(photographerTagline);
+    // Create photographer portrait element
+    const photographerPortrait = createElement("img", null, {
+      src: `./assets/photographers/${portrait}`,
+      alt: name
+    });
+
+    // Append photographer portrait to photographerHeader
     photographerHeader.appendChild(photographerPortrait);
 
-    return (photographerHeader);
-  }
+    // Add class to photographer name
+    photographerName.classList.add('photograph-name');
 
-  //Create badge element
+    return photographerHeader;
+  };
+
+  // Create badge element
   const getBadgeDOM = () => {
-    const main = document.getElementById('main')
+    const main = document.getElementById('main');
 
-    //Create element
-    const badge = document.createElement('div')
-    const badgeLike = document.createElement('p')
-    const badgePrice = document.createElement('p')
-    const badgeIcon = document.createElement('span')
+    // Create all elements using createElement function
+    const badge = createElement("div", null, { class: "badge" });
+    const badgeLike = createElement("p", '100');
+    const badgeIcon = createElement("span", '♥');
+    const badgePrice = createElement("p", `${price}€ / jour`);
 
-    //Add content
-    badgeLike.textContent = '100'
-    badgeIcon.textContent = '♥'
-    badgePrice.textContent = `${price}€ / jour`
+    // Append all elements
+    badge.append(badgeLike, badgePrice);
+    badgeLike.appendChild(badgeIcon);
+    main.appendChild(badge);
 
-    //Add style
-    badge.classList.add('badge')
+    return badge;
+  };
 
-    //Append elements
-    badge.appendChild(badgeLike)
-    badgeLike.appendChild(badgeIcon)
-    badge.appendChild(badgePrice)
-    main.appendChild(badge)
-
-    return (badge)
-  }
-
-  return { getHeaderDOM, getBadgeDOM }
-}
+  return { getHeaderDOM, getBadgeDOM };
+};
