@@ -8,9 +8,11 @@ export const photographerTemplate = (data) => {
     const photographerHeader = document.querySelector(".photograph-header");
     const photographerName = document.querySelector('.photograph-name');
     const photographInfo = document.querySelector('.photograph-info');
+    const modalTitle = document.getElementById('modal_title')
 
     // Set photographer name
     photographerName.textContent = name;
+    modalTitle.textContent = `Contactez-moi ${name}`;
 
     // Append tagline and location paragraphs to photographInfo
     photographInfo.append(

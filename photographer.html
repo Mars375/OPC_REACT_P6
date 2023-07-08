@@ -25,9 +25,7 @@
 				<div class="photograph-info">
 					<h1 class="photograph-name"></h1>
 				</div>
-				<button class="contact_button" onclick="displayModal()">
-					Contactez-moi
-				</button>
+				<button class="contact_button">Contactez-moi</button>
 			</div>
 			<div class="select-filter">
 				<label for="filter" id="filter-label">Trier par</label>
@@ -47,19 +45,34 @@
 		<div id="contact_modal">
 			<div class="modal">
 				<header>
-					<h2>Contactez-moi</h2>
-					<img src="assets/icons/close.svg" onclick="closeModal()" />
+					<h2 id="modal_title"></h2>
+					<img
+						id="close_modal"
+						src="assets/icons/close.svg"
+						alt="Close Contact form"
+					/>
 				</header>
 				<form>
 					<div>
-						<label>Prénom</label>
-						<input />
+						<label for="firstname">Prénom</label>
+						<input type="text" name="firstname" id="firstname" />
+					</div>
+					<div>
+						<label for="lastname">Nom</label>
+						<input type="text" name="lastname" id="lastname" />
+					</div>
+					<div>
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" />
+					</div>
+					<div>
+						<label for="message">Votre message</label>
+						<textarea name="message" id="message"></textarea>
 					</div>
 					<button class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>
 		<script src="scripts/pages/photographer.js" type="module"></script>
-		<script src="scripts/utils/contactForm.js"></script>
 	</body>
 </html>
