@@ -3,7 +3,7 @@ export const createElement = (tag, content, attributes) => {
   const element = document.createElement(tag);
 
   // Set the content if provided
-  if (content !== null && content !== undefined) {
+  if (content) {
     element.textContent = content;
   }
 

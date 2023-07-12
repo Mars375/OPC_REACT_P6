@@ -25,7 +25,9 @@
 				<div class="photograph-info">
 					<h1 class="photograph-name"></h1>
 				</div>
-				<button class="contact_button">Contactez-moi</button>
+				<button class="contact_button" aria-label="Contact Me">
+					Contactez-moi
+				</button>
 			</div>
 			<div class="select-filter">
 				<label for="filter" id="filter-label">Trier par</label>
@@ -43,35 +45,75 @@
 			<div class="media_container"></div>
 		</main>
 		<div id="contact_modal">
-			<div class="modal">
+			<div class="modal" role="dialog" aria-labelledby="modal_title">
 				<header>
 					<h2 id="modal_title"></h2>
-					<img
-						id="close_modal"
-						src="assets/icons/close.svg"
-						alt="Close Contact form"
-					/>
+					<button id="close_modal" aria-label="Close modal window" tabindex="1">
+						<img src="assets/icons/close.svg" alt="Close Contact form" />
+					</button>
 				</header>
 				<form>
 					<div>
 						<label for="firstname">Prénom</label>
-						<input type="text" name="firstname" id="firstname" />
+						<input
+							type="text"
+							name="firstname"
+							id="firstname"
+							aria-labelledby="firstname"
+							data-error=""
+						/>
 					</div>
 					<div>
 						<label for="lastname">Nom</label>
-						<input type="text" name="lastname" id="lastname" />
+						<input
+							type="text"
+							name="lastname"
+							id="lastname"
+							aria-labelledby="lastname"
+							data-error=""
+						/>
 					</div>
 					<div>
 						<label for="email">Email</label>
-						<input type="email" name="email" id="email" />
+						<input
+							type="email"
+							name="email"
+							id="email"
+							aria-labelledby="email"
+							data-error=""
+						/>
 					</div>
 					<div>
 						<label for="message">Votre message</label>
-						<textarea name="message" id="message"></textarea>
+						<textarea
+							name="message"
+							id="message"
+							aria-labelledby="message"
+							data-error=""
+						></textarea>
 					</div>
-					<button class="contact_button">Envoyer</button>
+					<button class="contact_button" aria-label="Send">Envoyer</button>
 				</form>
 			</div>
+		</div>
+		<div id="lightbox_modal" role="dialog" aria-label="image closeup view">
+			<a id="lightbox_modal_left_arrow" aria-label="Previous image">&lt;</a>
+			<div id="lightbox_modal_container"></div>
+			<a id="lightbox_modal_right_arrow" aria-label="Next image">></a>
+			<button id="close_lightbox_modal" aria-label="Close dialog">
+				<svg
+					width="30"
+					height="30"
+					viewBox="0 0 42 42"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<title>Close dialog</title>
+					<path
+						d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z"
+					/>
+				</svg>
+			</button>
 		</div>
 		<script src="scripts/pages/photographer.js" type="module"></script>
 	</body>
