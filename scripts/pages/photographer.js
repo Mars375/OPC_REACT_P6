@@ -13,10 +13,11 @@ async function displayData(photographer, media) {
   const mediaDOM = mediaModel.getMediaDOM()
 
   mediaDOM.forEach((mediaElement, index) => {
-    mediaElement.addEventListener("click", () => {
+    const mediaElementPicture = mediaElement.querySelector(".media_element_picture");
+    mediaElementPicture.addEventListener("click", () => {
       displayLightboxModal(media, index);
     })
-    mediaElement.addEventListener("keyup", (event) => {
+    mediaElementPicture.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
         displayLightboxModal(media, index);
       }
@@ -24,6 +25,7 @@ async function displayData(photographer, media) {
   })
   photographerModel.getHeaderDOM();
   photographerModel.getBadgeDOM();
+  mediaModel.updateTotalLikes();
 }
 
 // add event listener to the filter select element

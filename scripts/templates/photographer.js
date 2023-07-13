@@ -1,4 +1,5 @@
 import { createElement } from "../utils/createDOM.js";
+import { mediaCardTemplate } from "./mediaCard.js";
 
 export const photographerTemplate = (data) => {
   const { name, tagline, city, country, portrait, price } = data;
@@ -41,14 +42,13 @@ export const photographerTemplate = (data) => {
 
     // Create all elements using createElement function
     const badge = createElement("div", null, { class: "badge" });
-    const badgeLike = createElement("p", '100');
-    const badgeIcon = createElement("span", '♥');
+    const badgeLike = createElement("p", "", { class: "badge_likes" });
     const badgePrice = createElement("p", `${price}€ / jour`);
 
     // Append all elements
     badge.append(badgeLike, badgePrice);
-    badgeLike.appendChild(badgeIcon);
     main.appendChild(badge);
+
 
     return badge;
   };

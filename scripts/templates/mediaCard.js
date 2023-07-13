@@ -2,6 +2,8 @@ import { createElement } from "../utils/createDOM.js";
 
 export const mediaCardTemplate = (media) => {
   const mediaContainer = document.querySelector(".media_container");
+  const likedMedia = new Set()
+
   const mediaModel = media.map((mediaItem) => {
     // Create all elements using createElement function
     const mediaElement = createElement("div", null, {
@@ -36,6 +38,11 @@ export const mediaCardTemplate = (media) => {
       class: "media_element_like_icon",
     });
 
+    // Add event listener to mediaElementLike
+    mediaElementLike.addEventListener("click", () => {
+      updateLikes(mediaItem, mediaElementLikeCount, mediaElementLikeIcon);
+    });
+
     // Append all my Elements to their respective container
     mediaElementLike.append(mediaElementLikeCount, mediaElementLikeIcon);
     mediaTitleAndLikesWrapper.append(mediaElementTitle, mediaElementLike);
@@ -46,7 +53,30 @@ export const mediaCardTemplate = (media) => {
     return mediaElement;
   });
 
+  const updateLikes = (mediaItem, likeElement, icon) => {
+    if (likedMedia.has(mediaItem.id)) {
+      likedMedia.delete(mediaItem.id)
+      mediaItem.likes--
+      icon.style.color = "#901c1c"
+    } else {
+      likedMedia.add(mediaItem.id)
+      mediaItem.likes++
+      icon.style.color = "black"
+    }
+    likeElement.textContent = mediaItem.likes
+    updateTotalLikes()
+  }
+
+  function updateTotalLikes() {
+    const badgeLike = document.querySelector(".badge_likes");
+    const totalLikes = media.reduce((sum, mediaItem) => sum + mediaItem.likes, 0);
+    badgeLike.textContent = totalLikes;
+    const badgeIcon = createElement("span", '♥');
+    badgeLike.appendChild(badgeIcon);
+  };
+
   return {
     getMediaDOM: () => mediaModel,
+    updateTotalLikes
   };
 };

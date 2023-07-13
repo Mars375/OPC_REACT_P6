@@ -10,6 +10,19 @@ const closeMediaModalBtn = document.getElementById("close_lightbox_modal");
 const leftArrow = document.getElementById("lightbox_modal_left_arrow");
 const rightArrow = document.getElementById("lightbox_modal_right_arrow");
 
+
+// add listener on our close button
+closeMediaModalBtn.addEventListener("click", closeLightboxModal)
+
+// add listener on our left arrow
+leftArrow.addEventListener("click", showPreviousImage);
+
+// add listener on our right arrow
+rightArrow.addEventListener("click", showNextImage);
+
+// add listener on our keyboard
+document.addEventListener("keydown", handleKeyDown);
+
 export const displayLightboxModal = (mediaItems, index) => {
   // Update the current index
   currentIndex = index;
@@ -28,6 +41,7 @@ export const displayLightboxModal = (mediaItems, index) => {
     medias[currentIndex].image ? "img" : "video", null, {
     src: `./assets/media/${medias[currentIndex].photographerId}/${medias[currentIndex].image || medias[currentIndex].video}`,
     alt: medias[currentIndex].title,
+    controls: "true"
   }
   );
 
@@ -43,20 +57,9 @@ export const displayLightboxModal = (mediaItems, index) => {
   document.body.style.overflow = 'hidden';
   modal.style.display = "flex"
 
-  // add listener on our close button
-  closeMediaModalBtn.addEventListener("click", closeLightboxModal)
-
-  // add listener on our left arrow
-  leftArrow.addEventListener("click", showPreviousImage);
-
-  // add listener on our right arrow
-  rightArrow.addEventListener("click", showNextImage);
-
-  // add listener on our keyboard
-  document.addEventListener("keydown", handleKeyDown);
 }
 
-const handleKeyDown = (event) => {
+function handleKeyDown(event) {
   switch (event.key) {
     case "ArrowLeft":
       showPreviousImage();
@@ -72,19 +75,17 @@ const handleKeyDown = (event) => {
   }
 };
 
-const closeLightboxModal = () => {
-  const modal = document.getElementById("lightbox_modal");
-  document.body.style.overflow = '';
+function closeLightboxModal() {
   modal.style.display = "none"
-  closeMediaModalBtn.removeEventListener("click", closeLightboxModal);
+  document.body.style.overflow = '';
 }
 
-const showPreviousImage = () => {
+function showPreviousImage() {
   currentIndex = (currentIndex - 1 + medias.length) % medias.length
   displayLightboxModal(medias, currentIndex);
 }
 
-const showNextImage = () => {
+function showNextImage() {
   currentIndex = (currentIndex + 1) % medias.length;
   displayLightboxModal(medias, currentIndex);
 }

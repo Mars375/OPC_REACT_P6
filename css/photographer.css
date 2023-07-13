@@ -69,13 +69,13 @@
 	border-top-left-radius: 0.25rem;
 	border-top-right-radius: 0.25rem;
 	display: flex;
-	max-width: fit-content;
+	justify-content: space-between;
+	width: 300px;
 	align-items: center;
 	background-color: #db8876;
 	position: sticky;
 	bottom: 0;
 	float: right;
-	margin-right: 2rem;
 }
 
 .badge p {
