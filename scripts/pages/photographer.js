@@ -3,6 +3,7 @@ import { photographerTemplate } from "../templates/photographer.js";
 import { mediaCardTemplate } from "../templates/mediaCard.js";
 import { sortMedia } from "../utils/filterSelect.js";
 import { displayModal, closeModal } from "../utils/contactForm.js";
+import { displayLightboxModal } from "../utils/lightboxModal.js";
 
 // Display photographer data with Template
 async function displayData(photographer, media) {
@@ -51,10 +52,15 @@ const closeModalBtn = document.getElementById('close_modal');
 closeModalBtn.addEventListener('click', closeModal);
 
 const init = async () => {
+  const loader = document.getElementById('loader')
   try {
     const photographer = await getPhotographer();
     const media = await getPhotographerMedia();
-    displayData(photographer, media);
+    await displayData(photographer, media);
+    // timeout before remove loader
+    setTimeout(() => {
+      loader.remove();
+    }, 1000);
   } catch (error) {
     console.error('Une erreur s\'est produite lors de l\'initialisation :', error);
   }
