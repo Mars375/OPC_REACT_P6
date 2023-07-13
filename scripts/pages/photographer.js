@@ -14,7 +14,7 @@ async function displayData(photographer, media) {
 
   mediaDOM.forEach((mediaElement, index) => {
     mediaElement.addEventListener("click", () => {
-      displayLightboxModal(media[index]);
+      displayLightboxModal(media, index);
     })
   })
   photographerModel.getHeaderDOM();
