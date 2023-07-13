@@ -16,6 +16,11 @@ async function displayData(photographer, media) {
     mediaElement.addEventListener("click", () => {
       displayLightboxModal(media, index);
     })
+    mediaElement.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        displayLightboxModal(media, index);
+      }
+    })
   })
   photographerModel.getHeaderDOM();
   photographerModel.getBadgeDOM();

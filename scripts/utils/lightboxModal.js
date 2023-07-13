@@ -3,13 +3,14 @@ import { createElement } from "./createDOM.js";
 let currentIndex = 0
 let medias = []
 
-export const displayLightboxModal = (mediaItems, index) => {
-  const modal = document.getElementById("lightbox_modal");
-  const modalContent = document.getElementById("lightbox_modal_container")
-  const closeMediaModalBtn = document.getElementById("close_lightbox_modal");
-  const leftArrow = document.getElementById("lightbox_modal_left_arrow");
-  const rightArrow = document.getElementById("lightbox_modal_right_arrow");
+// get DOM content
+const modal = document.getElementById("lightbox_modal");
+const modalContent = document.getElementById("lightbox_modal_container")
+const closeMediaModalBtn = document.getElementById("close_lightbox_modal");
+const leftArrow = document.getElementById("lightbox_modal_left_arrow");
+const rightArrow = document.getElementById("lightbox_modal_right_arrow");
 
+export const displayLightboxModal = (mediaItems, index) => {
   // Update the current index
   currentIndex = index;
   medias = mediaItems
@@ -50,13 +51,32 @@ export const displayLightboxModal = (mediaItems, index) => {
 
   // add listener on our right arrow
   rightArrow.addEventListener("click", showNextImage);
+
+  // add listener on our keyboard
+  document.addEventListener("keydown", handleKeyDown);
 }
+
+const handleKeyDown = (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+      showPreviousImage();
+      break;
+    case "ArrowRight":
+      showNextImage();
+      break;
+    case "Escape":
+      closeLightboxModal();
+      break;
+    default:
+      break;
+  }
+};
 
 const closeLightboxModal = () => {
   const modal = document.getElementById("lightbox_modal");
   document.body.style.overflow = '';
   modal.style.display = "none"
-  document.getElementById('close_lightbox_modal').removeEventListener('click', closeLightboxModal);
+  closeMediaModalBtn.removeEventListener("click", closeLightboxModal);
 }
 
 const showPreviousImage = () => {
