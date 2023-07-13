@@ -51,6 +51,19 @@ modalBtn.addEventListener('click', displayModal);
 const closeModalBtn = document.getElementById('close_modal');
 closeModalBtn.addEventListener('click', closeModal);
 
+const form = document.getElementById('contact_form');
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  // console.log all element
+  for (const element of event.target.elements) {
+    if (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea') {
+      console.log(element.value)
+      element.value = ''
+    }
+  }
+  closeModal()
+});
+
 const init = async () => {
   const loader = document.getElementById('loader')
   try {

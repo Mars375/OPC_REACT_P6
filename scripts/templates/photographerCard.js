@@ -7,11 +7,12 @@ export function photographerCardTemplate(data) {
 
     // Create all elements using createElement function
     const article = createElement('article');
+
     // Create URL for the photographer page
     const url = `./photographer.html?id=${id}`;
     const link = createElement('a', null, { href: url });
     const div = createElement('div', null, { tabindex: '0' });
-    const img = createElement('img', null, { src: `./assets/photographers/${portrait}`, alt: name });
+    const img = createElement('img', null, { src: `./assets/photographers/${portrait}`, alt: name, class: "clickableImg" });
     const h2 = createElement('h2', name);
     const section = createElement('section');
     const location = createElement('p', `${city}, ${country}`);

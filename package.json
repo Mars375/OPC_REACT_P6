@@ -1,0 +1,11 @@
+{
+  "name": "OPC_REACT_P6",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Mars375/OPC_REACT_P6.git",
+  "author": "Mars375 <loic_2610@hotmail.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.44.0"
+  }
+}

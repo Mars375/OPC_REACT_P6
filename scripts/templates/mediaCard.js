@@ -20,6 +20,7 @@ export const mediaCardTemplate = (media) => {
       {
         src: `./assets/media/${mediaItem.photographerId}/${mediaItem.image || mediaItem.video}`,
         alt: mediaItem.title,
+        class: "clickableImg",
       }
     );
     const mediaTitleAndLikesWrapper = createElement("div", null, {
@@ -73,7 +74,7 @@ export const mediaCardTemplate = (media) => {
     badgeLike.textContent = totalLikes;
     const badgeIcon = createElement("span", '♥');
     badgeLike.appendChild(badgeIcon);
-  };
+  }
 
   return {
     getMediaDOM: () => mediaModel,

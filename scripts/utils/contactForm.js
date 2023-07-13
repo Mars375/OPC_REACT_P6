@@ -10,5 +10,4 @@ export const closeModal = () => {
   modal.style.display = "none";
   document.getElementById('close_modal').removeEventListener('click', closeModal);
   document.querySelector('.contact_button').addEventListener('click', displayModal);
-
 }

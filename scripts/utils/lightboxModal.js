@@ -73,7 +73,7 @@ function handleKeyDown(event) {
     default:
       break;
   }
-};
+}
 
 function closeLightboxModal() {
   modal.style.display = "none"
