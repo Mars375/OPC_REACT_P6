@@ -1,5 +1,4 @@
 import { createElement } from "../utils/createDOM.js";
-import { mediaCardTemplate } from "./mediaCard.js";
 
 export const photographerTemplate = (data) => {
   const { name, tagline, city, country, portrait, price } = data;

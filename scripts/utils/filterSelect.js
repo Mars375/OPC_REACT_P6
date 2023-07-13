@@ -1,8 +1,20 @@
+// Function to sort media based on selected option
+export const sortMedia = (media, option) => {
+  let sortedMedia = [];
 
-// function to handle filter change event
-export const handleFilterChange = (e) => {
-  const filter = e.target.value;
-  console.log(filter);
-  // TODO: implement filtering logic here...
-  document.getElementById('filter').removeEventListener('change')
-}
+  switch (option) {
+    case "popularite":
+      sortedMedia = media.sort((a, b) => b.likes - a.likes);
+      break;
+    case "date":
+      sortedMedia = media.sort((a, b) => new Date(a.date) - new Date(b.date));
+      break;
+    case "titre":
+      sortedMedia = media.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    default:
+      sortedMedia = media;
+  }
+
+  return sortedMedia;
+};
