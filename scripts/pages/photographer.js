@@ -1,13 +1,14 @@
-import { getPhotographer, getPhotographerMedia } from "../../helpers/query.js";
-import { photographerTemplate } from "../templates/photographer.js";
-import { mediaCardTemplate } from "../templates/mediaCard.js";
-import { sortMedia } from "../utils/filterSelect.js";
-import { displayModal, closeModal } from "../utils/contactForm.js";
-import { displayLightboxModal } from "../utils/lightboxModal.js";
+// Fichier photographer.js
 
-// Display photographer data with Template
+import { getPhotographer, getPhotographerMedia } from "../../helpers/query.js";
+import { PhotographerPage } from "../templates/photographePage.js";
+import { MediaCard } from "../templates/mediaCard.js";
+import { displayModal, closeModal } from "../utils/contactForm.js";
+import { displayLightboxModal } from "../utils/displayLightboxModal.js";
+import { sortMedia } from "../utils/sortMedia.js";
+
 async function displayData(photographer, media) {
-  const photographerModel = photographerTemplate(photographer);
+  const photographerModel = new PhotographerPage(photographer);
   const mediaContainer = document.querySelector(".media_container");
 
   photographerModel.getBadgeDOM();
@@ -16,8 +17,8 @@ async function displayData(photographer, media) {
   const displayMedia = (sortedMedia) => {
     mediaContainer.innerHTML = "";
 
-    const mediaModel = mediaCardTemplate(sortedMedia);
-    const mediaDOM = mediaModel.getMediaDOM();
+    const mediaCard = new MediaCard(sortedMedia);
+    const mediaDOM = mediaCard.getMediaDOM();
 
     mediaDOM.forEach((mediaElement, index) => {
       const mediaElementPicture = mediaElement.querySelector(".media_element_picture");
@@ -30,7 +31,8 @@ async function displayData(photographer, media) {
         }
       });
     });
-    mediaModel.updateTotalLikes()
+
+    mediaCard.updateTotalLikes();
   };
 
   const filterSelect = document.getElementById('filter');
@@ -57,15 +59,15 @@ form.addEventListener('submit', (event) => {
   // console.log all element
   for (const element of event.target.elements) {
     if (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea') {
-      console.log(element.value)
-      element.value = ''
+      console.log(element.value);
+      element.value = '';
     }
   }
-  closeModal()
+  closeModal();
 });
 
 const init = async () => {
-  const loader = document.getElementById('loader')
+  const loader = document.getElementById('loader');
   try {
     const photographer = await getPhotographer();
     const media = await getPhotographerMedia();
@@ -77,6 +79,6 @@ const init = async () => {
   } catch (error) {
     console.error('Une erreur s\'est produite lors de l\'initialisation :', error);
   }
-}
+};
 
 init();

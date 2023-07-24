@@ -1,22 +1,22 @@
 import { getPhotographers } from "../../helpers/query.js";
-import { photographerCardTemplate } from "../templates/photographerCard.js"
+import { PhotographerCard } from "../templates/PhotographerCard.js";
 
-// Display photographers data with Template
-async function displayData(photographers) {
-  const photographersSection = document.querySelector(".photographer_section");
+class App {
+  async init() {
+    const { photographers } = await getPhotographers();
+    this.displayData(photographers);
+  }
 
-  photographers.forEach((photographer) => {
-    const photographerModel = photographerCardTemplate(photographer);
-    const userCardDOM = photographerModel.getUserCardDOM();
-    photographersSection.appendChild(userCardDOM);
-  });
+  displayData(photographers) {
+    const photographersSection = document.querySelector(".photographer_section");
+
+    photographers.forEach((photographer) => {
+      const photographerCard = new PhotographerCard(photographer);
+      const userCardDOM = photographerCard.getUserCardDOM();
+      photographersSection.appendChild(userCardDOM);
+    });
+  }
 }
 
-
-async function init() {
-  const { photographers } = await getPhotographers();
-  displayData(photographers);
-}
-
-init();
-
+const app = new App();
+app.init();

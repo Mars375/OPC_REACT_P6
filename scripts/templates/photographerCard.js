@@ -1,25 +1,33 @@
-import { createElement } from '../utils/createDOM.js';
+import { createElement } from "../utils/createElement.js"
 
-export function photographerCardTemplate(data) {
-  const { name, portrait, id, city, country, tagline, price } = data;
+export class PhotographerCard {
+  constructor(data) {
+    const { name, portrait, id, city, country, tagline, price } = data;
+    this.name = name;
+    this.portrait = portrait;
+    this.id = id;
+    this.city = city;
+    this.country = country;
+    this.tagline = tagline;
+    this.price = price;
+  }
 
-  function getUserCardDOM() {
+  getUserCardDOM() {
+    const article = createElement("article");
+    const url = `./photographer.html?id=${this.id}`;
+    const link = createElement("a", null, { href: url });
+    const div = createElement("div", null, { tabindex: "0" });
+    const img = createElement("img", null, {
+      src: `./assets/photographers/${this.portrait}`,
+      alt: this.name,
+      class: "clickableImg",
+    });
+    const h2 = createElement("h2", this.name);
+    const section = createElement("section");
+    const location = createElement("p", `${this.city}, ${this.country}`);
+    const tag = createElement("p", this.tagline);
+    const pricePerDay = createElement("p", `${this.price}€/jour`);
 
-    // Create all elements using createElement function
-    const article = createElement('article');
-
-    // Create URL for the photographer page
-    const url = `./photographer.html?id=${id}`;
-    const link = createElement('a', null, { href: url });
-    const div = createElement('div', null, { tabindex: '0' });
-    const img = createElement('img', null, { src: `./assets/photographers/${portrait}`, alt: name, class: "clickableImg" });
-    const h2 = createElement('h2', name);
-    const section = createElement('section');
-    const location = createElement('p', `${city}, ${country}`);
-    const tag = createElement('p', tagline);
-    const pricePerDay = createElement('p', `${price}€/jour`);
-
-    // Append all element to their respective container
     div.append(img, h2);
     section.append(location, tag, pricePerDay);
     link.append(div);
@@ -27,6 +35,4 @@ export function photographerCardTemplate(data) {
 
     return article;
   }
-
-  return { getUserCardDOM };
 }

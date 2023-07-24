@@ -1,4 +1,4 @@
-// Function to sort media based on selected option
+
 export const sortMedia = (media, option) => {
   let sortedMedia = [];
 

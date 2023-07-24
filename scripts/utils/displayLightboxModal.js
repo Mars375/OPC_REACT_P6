@@ -1,4 +1,4 @@
-import { createElement } from "./createDOM.js";
+import { createElement } from "./createElement.js";
 
 let currentIndex = 0
 let medias = []

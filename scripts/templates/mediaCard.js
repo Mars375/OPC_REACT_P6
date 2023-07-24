@@ -1,10 +1,21 @@
-import { createElement } from "../utils/createDOM.js";
+// Fichier MediaCard.js
 
-export const mediaCardTemplate = (media) => {
-  const mediaContainer = document.querySelector(".media_container");
-  const likedMedia = new Set()
+import { createElement } from "../utils/createElement.js";
+import { sortMedia } from "../utils/sortMedia.js";
+import { handleLikes } from "../utils/handleLikes.js";
 
-  const mediaModel = media.map((mediaItem) => {
+export class MediaCard {
+  constructor(media) {
+    this.media = media;
+    this.mediaContainer = document.querySelector(".media_container");
+    this.likedMedia = new Set();
+    this.mediaModel = [];
+    this.filterSelect = document.getElementById('filter');
+    this.applySortEventListener();
+    this.displayMedia();
+  }
+
+  createMediaElement(mediaItem) {
     // Create all elements using createElement function
     const mediaElement = createElement("div", null, {
       class: "media_element",
@@ -15,17 +26,15 @@ export const mediaCardTemplate = (media) => {
       class: "media_element_picture",
     });
     const mediaElementPictureContent = createElement(
-      mediaItem.image ? "img" : "video",
-      null,
-      {
-        src: `./assets/media/${mediaItem.photographerId}/${mediaItem.image || mediaItem.video}`,
-        alt: mediaItem.title,
-        class: "clickableImg",
-      }
+      mediaItem.image ? "img" : "video", null, {
+      src: `./assets/media/${mediaItem.photographerId}/${mediaItem.image || mediaItem.video}`,
+      alt: mediaItem.title,
+      controls: "true"
+    }
     );
-    const mediaTitleAndLikesWrapper = createElement("div", null, {
+    const mediaInfo = createElement("div", null, {
       class: "media_element_info",
-    });
+    })
     const mediaElementTitle = createElement("p", mediaItem.title, {
       class: "media_element_title",
     });
@@ -41,43 +50,50 @@ export const mediaCardTemplate = (media) => {
 
     // Add event listener to mediaElementLike
     mediaElementLike.addEventListener("click", () => {
-      updateLikes(mediaItem, mediaElementLikeCount, mediaElementLikeIcon);
+      this.updateLikes(mediaItem, mediaElementLikeCount, mediaElementLikeIcon);
     });
 
-    // Append all my Elements to their respective container
+    // Append all elements to their respective container
     mediaElementLike.append(mediaElementLikeCount, mediaElementLikeIcon);
-    mediaTitleAndLikesWrapper.append(mediaElementTitle, mediaElementLike);
     mediaElementPicture.append(mediaElementPictureContent);
-    mediaElement.append(mediaElementPicture, mediaTitleAndLikesWrapper);
-    mediaContainer.append(mediaElement);
+    mediaInfo.append(mediaElementTitle, mediaElementLike);
+    mediaElement.append(mediaElementPicture, mediaInfo);
+    this.mediaContainer.append(mediaElement);
 
     return mediaElement;
-  });
-
-  const updateLikes = (mediaItem, likeElement, icon) => {
-    if (likedMedia.has(mediaItem.id)) {
-      likedMedia.delete(mediaItem.id)
-      mediaItem.likes--
-      icon.style.color = "#901c1c"
-    } else {
-      likedMedia.add(mediaItem.id)
-      mediaItem.likes++
-      icon.style.color = "black"
-    }
-    likeElement.textContent = mediaItem.likes
-    updateTotalLikes()
   }
 
-  function updateTotalLikes() {
+  createMedia() {
+    this.mediaModel = this.media.map((mediaItem) => this.createMediaElement(mediaItem));
+  }
+
+  displayMedia() {
+    this.mediaContainer.innerHTML = "";
+    this.createMedia();
+  }
+
+  applySortEventListener() {
+    this.filterSelect.addEventListener('change', (event) => {
+      const selectedOption = event.target.value;
+      const sortedMedia = sortMedia(this.media, selectedOption);
+      this.displayMedia(sortedMedia);
+    });
+  }
+
+  updateLikes(mediaItem, likeElement, icon) {
+    handleLikes(mediaItem, likeElement, icon, this.likedMedia);
+    this.updateTotalLikes();
+  }
+
+  updateTotalLikes() {
     const badgeLike = document.querySelector(".badge_likes");
-    const totalLikes = media.reduce((sum, mediaItem) => sum + mediaItem.likes, 0);
+    const totalLikes = this.media.reduce((sum, mediaItem) => sum + mediaItem.likes, 0);
     badgeLike.textContent = totalLikes;
     const badgeIcon = createElement("span", '♥');
     badgeLike.appendChild(badgeIcon);
   }
 
-  return {
-    getMediaDOM: () => mediaModel,
-    updateTotalLikes
-  };
-};
+  getMediaDOM() {
+    return this.mediaModel;
+  }
+}
