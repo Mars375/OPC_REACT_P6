@@ -1,5 +1,3 @@
-// Fichier MediaCard.js
-
 import { createElement } from "../utils/createElement.js";
 import { sortMedia } from "../utils/sortMedia.js";
 import { handleLikes } from "../utils/handleLikes.js";

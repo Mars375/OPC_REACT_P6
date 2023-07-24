@@ -1,5 +1,3 @@
-// Fichier photographer.js
-
 import { getPhotographer, getPhotographerMedia } from "../../helpers/query.js";
 import { PhotographerPage } from "../templates/photographePage.js";
 import { MediaCard } from "../templates/mediaCard.js";
