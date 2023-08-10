@@ -1,0 +1,175 @@
+/* reset.css */
+
+/* Réinitialisation des marges et des rembourrages */
+html,
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+/* Réinitialisation des éléments de type block */
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+	display: block;
+}
+
+/* Réinitialisation des éléments de type inline */
+li {
+	display: list-item;
+}
+
+/* Réinitialisation des styles de listes */
+ol,
+ul {
+	list-style: none;
+}
+
+/* Réinitialisation des styles des liens */
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+/* Réinitialisation des bordures des tableaux */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Réinitialisation de la taille de la police à 16px */
+body {
+	font-size: 16px;
+}
+
+/* Réinitialisation des styles de formulaire */
+input,
+select,
+textarea,
+button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+/* Réinitialisation de la hauteur des éléments de type bouton */
+button {
+	line-height: normal;
+}

@@ -1,4 +1,4 @@
-import { getPhotographer, getPhotographerMedia } from "../../helpers/query.js";
+import { getPhotographer, getPhotographerMedia } from "../helpers/query.js";
 import { PhotographerPage } from "../templates/photographePage.js";
 import { MediaCard } from "../templates/mediaCard.js";
 import { displayModal, closeModal } from "../utils/contactForm.js";

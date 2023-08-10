@@ -11,29 +11,23 @@ header {
 	justify-content: space-between;
 	align-items: center;
 	height: 90px;
+	margin: 2rem 6.25rem;
 }
 
 h1 {
 	color: #901c1c;
-	margin-right: 100px;
-}
-
-.clickableImg:hover {
-	cursor: pointer;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-	transform: scale(1.05);
+	font-size: 2.25rem;
 }
 
 .logo {
 	height: 50px;
-	margin-left: 100px;
 }
 
 .photographer_section {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 70px;
-	margin-top: 100px;
+	margin-top: 2rem;
 }
 
 .photographer_section article {
@@ -44,45 +38,65 @@ h1 {
 	flex-direction: column;
 }
 
-.photographer_section a {
-	cursor: pointer;
-	text-align: center;
-	text-decoration: unset;
-}
-
 .photographer_section article h2 {
-	margin: 0;
-	margin-top: 1rem;
 	color: #d3573c;
 	font-size: 36px;
-	font-weight: 500;
-}
-
-.photographer_section a div {
-	justify-self: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 
 .photographer_section article img {
 	height: 200px;
 	width: 200px;
-	border-radius: 50%;
+}
+
+.card-photographer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-photographer__link {
+	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.card-photographer__portrait {
+	height: 200px;
+	width: 200px;
+	margin: auto;
+}
+
+.card-photographer__portrait img {
+	height: 100%;
+	width: 100%;
+	border-radius: 100%;
 	object-fit: cover;
 }
 
-.photographer_section article p {
-	margin: 0;
-	text-align: center;
+.card-photographer__name {
+	color: #d3573c;
+	font-size: 2.25rem;
+	margin-top: 1.25rem;
 }
 
-.photographer_section article p:first-child {
+.card-photographer__information {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-photographer__location {
 	color: #901c1c;
 }
 
-.photographer_section article p:last-child {
-	color: #525252;
-	font-size: 0.75rem;
+.card-photographer__tagline {
+	font-size: 0.9rem;
+}
+
+.card-photographer__price {
+	color: #757575;
+	font-size: 0.8rem;
 }

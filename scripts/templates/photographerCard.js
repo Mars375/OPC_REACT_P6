@@ -1,38 +1,98 @@
-import { createElement } from "../utils/createElement.js"
+import { createElement } from "../utils/createElement.js";
 
 export class PhotographerCard {
-  constructor(data) {
-    const { name, portrait, id, city, country, tagline, price } = data;
-    this.name = name;
-    this.portrait = portrait;
-    this.id = id;
-    this.city = city;
-    this.country = country;
-    this.tagline = tagline;
-    this.price = price;
+  constructor(photographer) {
+    this._photographer = photographer
   }
 
-  getUserCardDOM() {
-    const article = createElement("article");
-    const url = `./photographer.html?id=${this.id}`;
-    const link = createElement("a", null, { href: url });
-    const div = createElement("div", null, { tabindex: "0" });
-    const img = createElement("img", null, {
-      src: `./assets/photographers/${this.portrait}`,
-      alt: this.name,
-      class: "clickableImg",
-    });
-    const h2 = createElement("h2", this.name);
-    const section = createElement("section");
-    const location = createElement("p", `${this.city}, ${this.country}`);
-    const tag = createElement("p", this.tagline);
-    const pricePerDay = createElement("p", `${this.price}€/jour`);
+  getCardWrapper({ name }) {
+    const cardWrapper = createElement('div', null, {
+      class: 'card-photographer',
+      'aria-label': `Photographer ${name}`
+    })
+    return cardWrapper
+  }
 
-    div.append(img, h2);
-    section.append(location, tag, pricePerDay);
-    link.append(div);
-    article.append(link, section);
+  getInformationSection() {
+    const informationSection = createElement('div', null, {
+      class: 'card-photographer__information',
+      'aria-label': 'Plus d&apos;informations',
+      tabindex: '0'
+    })
+    return informationSection
+  }
 
-    return article;
+  getLink({ id }) {
+    const link = createElement('a', null, {
+      class: 'card-photographer__link',
+      href: `./photographer.html?id=${id}`,
+      'aria-roledescription': '',
+      'aria-label': '',
+      tabindex: '0'
+    })
+    return link
+  }
+
+  getPortrait({ name, portrait }) {
+    const portraitWrapper = createElement('div', null, {
+      class: 'card-photographer__portrait'
+    })
+    const portraitImage = createElement('img', null, {
+      src: portrait,
+      alt: `Portrait de ${name}`
+    })
+    portraitWrapper.append(portraitImage)
+    return portraitWrapper
+  }
+
+  getName({ name }) {
+    const nameElement = createElement('h2', name, {
+      class: 'card-photographer__name'
+    })
+    return nameElement
+  }
+
+  getLocation({ location }) {
+    const locationElement = createElement('p', location, {
+      class: 'card-photographer__location',
+      'aria-roledescription': 'Localisation de l&apos;artiste',
+      'aria-label': 'Ville et Pays'
+    })
+    return locationElement
+  }
+
+  getTagline({ tagline }) {
+    const taglineElement = createElement('p', tagline, {
+      class: 'card-photographer__tagline',
+      'aria-roledescription': 'Tagline de l&apos;artiste',
+      'aria-label': 'Tagline'
+    })
+    return taglineElement
+  }
+
+  getPrice({ price }) {
+    const priceElement = createElement('p', price, {
+      class: 'card-photographer__price',
+      'aria-roledescription': 'Tarif journalier de l&apos;artiste',
+      'aria-label': 'Tarif journalier'
+    })
+    return priceElement
+  }
+
+  createCard() {
+    const cardWrapper = this.getCardWrapper(this._photographer)
+    const informationSection = this.getInformationSection()
+    const link = this.getLink(this._photographer)
+    const portrait = this.getPortrait(this._photographer)
+    const name = this.getName(this._photographer)
+    const location = this.getLocation(this._photographer)
+    const tagline = this.getTagline(this._photographer)
+    const price = this.getPrice(this._photographer)
+
+    informationSection.append(location, tagline, price)
+    link.append(portrait, name)
+    cardWrapper.append(link, informationSection)
+
+    return cardWrapper
   }
 }
