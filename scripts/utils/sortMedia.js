@@ -1,9 +1,8 @@
-
 export const sortMedia = (media, option) => {
   let sortedMedia = [];
 
   switch (option) {
-    case "popularite":
+    case "popularité":
       sortedMedia = media.sort((a, b) => b.likes - a.likes);
       break;
     case "date":
@@ -15,6 +14,5 @@ export const sortMedia = (media, option) => {
     default:
       sortedMedia = media;
   }
-
   return sortedMedia;
 };

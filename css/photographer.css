@@ -4,11 +4,33 @@
 
 .photograph-header {
 	background-color: #fafafa;
-	height: 300px;
+	height: 200px;
 	margin: 0 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 3rem;
 }
 
-.contact_button {
+.photograph-header__name {
+	font-size: 4rem;
+	font-weight: normal;
+	color: #d3573c;
+	margin: 0;
+}
+
+.photograph-header__location {
+	font-size: 1.5rem;
+	font-weight: normal;
+	color: #901c1c;
+	margin: 1rem 0;
+}
+
+.photograph-header__tagline {
+	color: #525252;
+}
+
+.photograph-header__button {
 	font-size: 20px;
 	font-weight: bold;
 	color: white;
@@ -21,9 +43,92 @@
 	cursor: pointer;
 }
 
+.photograph-header__button:hover {
+	background-color: #d3573c;
+}
+
+.photograph-header__button:active {
+	background-color: #d3573c;
+}
+
+.photograph-header__portrait-wrapper {
+	width: 12.5rem;
+	height: 12.5rem;
+	border-radius: 100%;
+	overflow: hidden;
+}
+
+.photograph-header__portrait {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.media-wrapper {
+	display: grid;
+	grid-template-columns: repeat(3, 300px);
+	justify-content: space-between;
+	gap: 1.5rem;
+	margin: 1.5rem 100px;
+}
+
+.media-card__media {
+	width: 300px;
+	height: 300px;
+	border-radius: 0.3rem;
+	overflow: hidden;
+}
+
+.media-card__media img,
+video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.media-card__information {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+}
+
+.media-card__title {
+	font-size: 1.5rem;
+	font-weight: normal;
+	color: #901c1c;
+	margin: 0.5rem 0;
+}
+
+.media-card__like-wrapper {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	gap: 3px;
+}
+
+.media-card__likes {
+	font-size: 1.5rem;
+	font-weight: normal;
+	color: #901c1c;
+	margin: 0;
+}
+
+.media-card__like-btn {
+	width: fit-content;
+	height: fit-content;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.media-card__likes-icon {
+	font-size: 1.3rem;
+	color: #901c1c;
+}
+
 .modal {
 	border-radius: 5px;
-	background-color: #db8876;
+	background-color: #d3573c;
 	width: 50%;
 	display: flex;
 	flex-direction: column;

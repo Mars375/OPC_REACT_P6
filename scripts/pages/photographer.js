@@ -1,82 +1,87 @@
-import { getPhotographer, getPhotographerMedia } from "../helpers/query.js";
-import { PhotographerPage } from "../templates/photographePage.js";
-import { MediaCard } from "../templates/mediaCard.js";
-import { displayModal, closeModal } from "../utils/contactForm.js";
-import { displayLightboxModal } from "../utils/displayLightboxModal.js";
-import { sortMedia } from "../utils/sortMedia.js";
+import { Query } from '../helpers/query.js'
+import { Loader } from '../components/Loader.js'
+import { Dropdown } from '../components/Dropdown.js'
 
-async function displayData(photographer, media) {
-  const photographerModel = new PhotographerPage(photographer);
-  const mediaContainer = document.querySelector(".media_container");
+import { GetPhotographer } from '../models/getPhotographer.js'
+import { GetMedia } from '../models/GetMedia.js'
+import { CardFactory } from '../factories/cardFactory.js'
+import { PhotographHeader } from '../templates/PhotographHeader.js'
 
-  photographerModel.getBadgeDOM();
-  photographerModel.getHeaderDOM();
+class App {
+  _photographer
+  _medias = []
 
-  const displayMedia = (sortedMedia) => {
-    mediaContainer.innerHTML = "";
+  constructor() {
+    const link = '/P6/data/photographers.json';
+    this.query = new Query(link);
+    this.mediaWrapper = document.querySelector('.media-wrapper');
+    this.spinnerLoader = new Loader();
+  }
 
-    const mediaCard = new MediaCard(sortedMedia);
-    const mediaDOM = mediaCard.getMediaDOM();
+  getParamsFromURL() {
+    const url = window.location.href;
+    const params = new URL(url).searchParams;
+    const id = params.get('id');
+    return parseInt(id);
+  }
 
-    mediaDOM.forEach((mediaElement, index) => {
-      const mediaElementPicture = mediaElement.querySelector(".media_element_picture");
-      mediaElementPicture.addEventListener("click", () => {
-        displayLightboxModal(sortedMedia, index);
-      });
-      mediaElementPicture.addEventListener("keyup", (event) => {
-        if (event.key === "Enter") {
-          displayLightboxModal(sortedMedia, index);
-        }
-      });
+  async getData() {
+    const { media: allMedias, photographers } = await this.query.fetch();
+
+    const id = this.getParamsFromURL();
+
+    const photographerFound = photographers.find(photographer => photographer.id === id);
+
+    this._photographer = new GetPhotographer(photographerFound);
+
+    allMedias
+      .filter(media => media.photographerId === this._photographer.id)
+      .map(media => {
+        const mediaFactory = new GetMedia(media);
+        mediaFactory.photographer = this._photographer;
+        this._medias.push(mediaFactory);
+      })
+  }
+
+  setDocumentTitle() {
+    return document.title = `FishEye - ${this._photographer.name}`;
+  }
+
+  async renderPage() {
+    this.setDocumentTitle();
+
+    const containerHeader = document.querySelector('.photograph-header');
+    const photographHeader = new PhotographHeader(this._photographer, containerHeader);
+    photographHeader.createPhotographHeader();
+    // TODO : Render badges
+
+    document.addEventListener('mediaSorted', (event) => {
+      const sortedMedias = event.detail;
+      this.renderMedias(sortedMedias);
     });
+    const dropdown = new Dropdown(this._medias, '.sort-wrapper');
+    dropdown.sortAndRenderMedia('popularité');
+    this.spinnerLoader.hide();
+  }
 
-    mediaCard.updateTotalLikes();
-  };
+  async renderMedias(data) {
+    this.mediaWrapper.innerHTML = '';
 
-  const filterSelect = document.getElementById('filter');
+    return data.map(media => {
+      const cardTemplate = new CardFactory(media, 'media');
+      const card = cardTemplate.createMediaCard();
+      this.mediaWrapper.appendChild(card);
+    })
+  }
 
-  // Initial display of media (default: popularity)
-  displayMedia(sortMedia(media, "popularite"));
+  // TODO: Setup likes counter
 
-  filterSelect.addEventListener('change', (event) => {
-    const selectedOption = event.target.value;
-    displayMedia(sortMedia(media, selectedOption));
-  });
-
+  async init() {
+    this.spinnerLoader.show()
+    await this.getData();
+    await this.renderPage();
+  }
 }
 
-const modalBtn = document.querySelector('.contact_button');
-modalBtn.addEventListener('click', displayModal);
-
-const closeModalBtn = document.getElementById('close_modal');
-closeModalBtn.addEventListener('click', closeModal);
-
-const form = document.getElementById('contact_form');
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  // console.log all element
-  for (const element of event.target.elements) {
-    if (element.tagName.toLowerCase() === 'input' || element.tagName.toLowerCase() === 'textarea') {
-      console.log(element.value);
-      element.value = '';
-    }
-  }
-  closeModal();
-});
-
-const init = async () => {
-  const loader = document.getElementById('loader');
-  try {
-    const photographer = await getPhotographer();
-    const media = await getPhotographerMedia();
-    await displayData(photographer, media);
-    // timeout before remove loader
-    setTimeout(() => {
-      loader.remove();
-    }, 1000);
-  } catch (error) {
-    console.error('Une erreur s\'est produite lors de l\'initialisation :', error);
-  }
-};
-
-init();
+const app = new App();
+app.init();

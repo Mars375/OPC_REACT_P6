@@ -1,19 +1,22 @@
+import { createElement } from '../utils/createElement.js';
+
 export class Loader {
   constructor() {
-    this.loaderElement = document.createElement('div');
-    this.loaderElement.id = 'loader';
-    this.spinnerElement = document.createElement('div');
-    this.spinnerElement.classList.add('loader-spinner');
-    this.loaderElement.appendChild(this.spinnerElement);
+    this.loaderContainer = createElement('div', { id: 'loader-container' });
+    this.loaderElement = createElement('div', { id: 'loader' });
+    this.spinnerElement = createElement('div', { class: 'loader-spinner' });
 
-    document.body.appendChild(this.loaderElement);
+    this.loaderElement.appendChild(this.spinnerElement);
+    this.loaderContainer.appendChild(this.loaderElement);
+
+    document.body.appendChild(this.loaderContainer);
   }
 
   show() {
-    this.loaderElement.style.display = 'flex';
+    this.loaderContainer.style.display = 'flex';
   }
 
   hide() {
-    this.loaderElement.style.display = 'none';
+    this.loaderContainer.style.display = 'none';
   }
 }

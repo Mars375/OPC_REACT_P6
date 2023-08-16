@@ -1,19 +1,21 @@
-export const createElement = (tag, content, attributes) => {
-  // Create the element with the specified tag
+export const createElement = (tag, options) => {
+
   const element = document.createElement(tag);
 
-  // Set the content if provided
-  if (content) {
-    element.textContent = content;
-  }
-
-  // Set attributes if provided
-  if (attributes) {
-    // Iterate over the attributes object and set each attribute on the element
-    for (const attribute in attributes) {
-      element.setAttribute(attribute, attributes[attribute]);
+  if (options) {
+    for (const key in options) {
+      if (key === 'innerText') {
+        element.innerText = options[key];
+      }
+      else if (key === 'dataset') {
+        for (const dataKey in options[key]) {
+          element.dataset[dataKey] = options[key][dataKey];
+        }
+      } else {
+        element.setAttribute(key, options[key]);
+      }
     }
   }
-  // Return the created element
+
   return element;
 };

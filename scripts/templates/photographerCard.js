@@ -6,77 +6,99 @@ export class PhotographerCard {
   }
 
   getCardWrapper({ name }) {
-    const cardWrapper = createElement('div', null, {
-      class: 'card-photographer',
-      'aria-label': `Photographer ${name}`
-    })
-    return cardWrapper
+    const $cardWrapper = createElement(
+      'div',
+      {
+        class: 'card-photographer',
+        'aria-label': `Photographer ${name}`
+      })
+    return $cardWrapper
   }
 
   getInformationSection() {
-    const informationSection = createElement('div', null, {
-      class: 'card-photographer__information',
-      'aria-label': 'Plus d&apos;informations',
-      tabindex: '0'
-    })
-    return informationSection
+    const $informationSection = createElement(
+      'div',
+      {
+        class: 'card-photographer__information',
+        'aria-label': 'Plus d&apos;informations',
+        tabindex: '0'
+      })
+    return $informationSection
   }
 
   getLink({ id }) {
-    const link = createElement('a', null, {
-      class: 'card-photographer__link',
-      href: `./photographer.html?id=${id}`,
-      'aria-roledescription': '',
-      'aria-label': '',
-      tabindex: '0'
-    })
-    return link
+    const $link = createElement(
+      'a',
+      {
+        class: 'card-photographer__link',
+        href: `./photographer.html?id=${id}`,
+        'aria-roledescription': '',
+        'aria-label': '',
+        tabindex: '0'
+      })
+    return $link
   }
 
   getPortrait({ name, portrait }) {
-    const portraitWrapper = createElement('div', null, {
-      class: 'card-photographer__portrait'
-    })
-    const portraitImage = createElement('img', null, {
-      src: portrait,
-      alt: `Portrait de ${name}`
-    })
-    portraitWrapper.append(portraitImage)
-    return portraitWrapper
+    const $portraitWrapper = createElement(
+      'div',
+      {
+        class: 'card-photographer__portrait'
+      })
+    const $portraitImage = createElement(
+      'img',
+      {
+        src: portrait,
+        alt: `Portrait de ${name}`
+      })
+    $portraitWrapper.append($portraitImage)
+    return $portraitWrapper
   }
 
   getName({ name }) {
-    const nameElement = createElement('h2', name, {
-      class: 'card-photographer__name'
-    })
-    return nameElement
+    const $nameElement = createElement(
+      'h2',
+      {
+        class: 'card-photographer__name',
+        innerText: name
+      })
+    return $nameElement
   }
 
   getLocation({ location }) {
-    const locationElement = createElement('p', location, {
-      class: 'card-photographer__location',
-      'aria-roledescription': 'Localisation de l&apos;artiste',
-      'aria-label': 'Ville et Pays'
-    })
-    return locationElement
+    const $locationElement = createElement(
+      'p',
+      {
+        class: 'card-photographer__location',
+        'aria-roledescription': 'Localisation de l&apos;artiste',
+        'aria-label': 'Ville et Pays',
+        innerText: location
+      })
+    return $locationElement
   }
 
   getTagline({ tagline }) {
-    const taglineElement = createElement('p', tagline, {
-      class: 'card-photographer__tagline',
-      'aria-roledescription': 'Tagline de l&apos;artiste',
-      'aria-label': 'Tagline'
-    })
-    return taglineElement
+    const $taglineElement = createElement(
+      'p',
+      {
+        class: 'card-photographer__tagline',
+        'aria-roledescription': 'Tagline de l&apos;artiste',
+        'aria-label': 'Tagline',
+        innerText: tagline
+      })
+    return $taglineElement
   }
 
   getPrice({ price }) {
-    const priceElement = createElement('p', price, {
-      class: 'card-photographer__price',
-      'aria-roledescription': 'Tarif journalier de l&apos;artiste',
-      'aria-label': 'Tarif journalier'
-    })
-    return priceElement
+    const $priceElement = createElement(
+      'p',
+      {
+        class: 'card-photographer__price',
+        'aria-roledescription': 'Tarif journalier de l&apos;artiste',
+        'aria-label': 'Tarif journalier',
+        innerText: `${price}€/jour`
+      })
+    return $priceElement
   }
 
   createCard() {

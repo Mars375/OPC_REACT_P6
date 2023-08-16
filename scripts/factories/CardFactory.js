@@ -1,4 +1,5 @@
 import { PhotographerCard } from "../templates/PhotographerCard.js"
+import { MediaCard } from "../templates/MediaCard.js"
 
 export class CardFactory {
   constructor(data, type) {

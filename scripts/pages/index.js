@@ -1,6 +1,6 @@
 import { Query } from '../helpers/query.js'
-import { Loader } from '../components/loader.js'
-import { GetPhotographer } from '../getters/getPhotographer.js'
+import { Loader } from '../components/Loader.js'
+import { GetPhotographer } from '../models/getPhotographer.js'
 import { CardFactory } from '../factories/cardFactory.js'
 
 class App {
