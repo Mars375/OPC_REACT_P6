@@ -1,23 +1,16 @@
-// mediaCardUtils.js
-import { createElement } from "../utils/createElement.js";
+export function handleLikes(media, $likesElement, $likeBtn, $likesIcon) {
+  const likesDelta = media.isLiked ? -1 : 1;
+  media._data.likes += likesDelta;
+  media.photographer.totalLikes += likesDelta;
 
-export const handleLikes = (mediaItem, likeElement, icon, likedMedia) => {
-  if (likedMedia.has(mediaItem.id)) {
-    likedMedia.delete(mediaItem.id);
-    mediaItem.likes--;
-    icon.style.color = "#901c1c";
-  } else {
-    likedMedia.add(mediaItem.id);
-    mediaItem.likes++;
-    icon.style.color = "black";
-  }
-  likeElement.textContent = mediaItem.likes;
-};
+  $likesElement.innerText = media._data.likes;
+  media.isLiked = !media.isLiked;
 
-export const updateTotalLikes = (media) => {
-  const badgeLike = document.querySelector(".badge_likes");
-  const totalLikes = media.reduce((sum, mediaItem) => sum + mediaItem.likes, 0);
-  badgeLike.textContent = totalLikes;
-  const badgeIcon = createElement("span", '♥');
-  badgeLike.appendChild(badgeIcon);
-};
+  const likeAction = media.isLiked ? "Annuler J'aime" : "Cliquer pour aimer la photo";
+  const likePressed = media.isLiked ? "true" : "false";
+
+  $likeBtn.setAttribute("aria-label", likeAction);
+  $likeBtn.setAttribute("aria-pressed", likePressed);
+  $likesElement.setAttribute("aria-label", `Nombre de likes : ${media._data.likes}`);
+  $likesIcon.classList.toggle("liked", media.isLiked);
+}

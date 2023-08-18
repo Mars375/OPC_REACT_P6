@@ -1,0 +1,47 @@
+// Class representing media data for photographers
+export class Media {
+  constructor(data) {
+    this._data = data; // Store the media data internally
+  }
+
+  // Getters for various media properties
+
+  get id() {
+    return this._data.id;
+  }
+
+  get photographerId() {
+    return this._data.photographerId;
+  }
+
+  get title() {
+    return this._data.title;
+  }
+
+  get mediaLink() {
+    const { photographerId, image, video } = this._data;
+    return `assets/media/${photographerId}/${image || video}`;
+  }
+
+  get mediaType() {
+    return this._data.image ? 'image' : 'video';
+  }
+
+  get likes() {
+    return this._data.likes;
+  }
+
+
+  get date() {
+    return this._data.date;
+  }
+
+  get price() {
+    return this._data.price;
+  }
+  // Setter for updating the likes
+
+  set likes(newLikes) {
+    this._data.likes = newLikes;
+  }
+}

@@ -1,6 +1,4 @@
-/* reset.css */
-
-/* Réinitialisation des marges et des rembourrages */
+/* Resetting margins, paddings, and borders for all elements */
 html,
 body,
 div,
@@ -67,7 +65,7 @@ td {
 	background: transparent;
 }
 
-/* Réinitialisation des éléments de type block */
+/* Resetting display for block-level elements */
 body,
 div,
 h1,
@@ -127,35 +125,35 @@ td {
 	display: block;
 }
 
-/* Réinitialisation des éléments de type inline */
+/* Resetting display for list items */
 li {
 	display: list-item;
 }
 
-/* Réinitialisation des styles de listes */
+/* Resetting list styles */
 ol,
 ul {
 	list-style: none;
 }
 
-/* Réinitialisation des styles des liens */
+/* Resetting link styles */
 a {
 	text-decoration: none;
 	color: inherit;
 }
 
-/* Réinitialisation des bordures des tableaux */
+/* Resetting table border styles */
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
-/* Réinitialisation de la taille de la police à 16px */
+/* Resetting font size to 16px */
 body {
 	font-size: 16px;
 }
 
-/* Réinitialisation des styles de formulaire */
+/* Resetting form element styles */
 input,
 select,
 textarea,
@@ -169,7 +167,7 @@ button {
 	background: transparent;
 }
 
-/* Réinitialisation de la hauteur des éléments de type bouton */
+/* Resetting button height */
 button {
 	line-height: normal;
 }

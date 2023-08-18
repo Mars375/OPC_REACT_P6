@@ -36,18 +36,14 @@
 			</div>
 			<section class="sort-wrapper"></section>
 			<section class="media-wrapper"></section>
+			<section class="sidebar-wrapper"></section>
 		</main>
-		<section id="contact_modal">
-			<div
-				class="modal__inner"
-				tabindex="-1"
-				role="dialog"
-				aria-labelledby="modalTitle"
-			>
+		<section id="contact_modal" class="modal" tabindex="-1">
+			<div class="modal__inner" role="dialog" aria-labelledby="modal__title">
 				<header>
-					<h2 id="modalTitle" tabindex="0">Contactez-moi</h2>
-					<h3 id="form_photographer" tabindex="0"></h3>
-					<button id="closeModal" aria-label="Fermer la boîte de dialogue">
+					<h2 id="modal__title" tabindex="0">Contactez-moi</h2>
+					<h3 id=".modal__photograph-name" tabindex="0"></h3>
+					<button class="modal__close" aria-label="Fermer la boîte de dialogue">
 						<span class="fa-solid fa-xmark"></span>
 					</button>
 				</header>
@@ -55,7 +51,7 @@
 			</div>
 		</section>
 		<section
-			id="lightbox_modal"
+			class="lightbox_modal"
 			role="dialog"
 			aria-label="image closeup view"
 			tabindex="0"

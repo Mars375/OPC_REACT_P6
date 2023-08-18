@@ -1,18 +1,12 @@
 export const sortMedia = (media, option) => {
-  let sortedMedia = [];
-
   switch (option) {
     case "popularité":
-      sortedMedia = media.sort((a, b) => b.likes - a.likes);
-      break;
+      return [...media].sort((a, b) => b.likes - a.likes);
     case "date":
-      sortedMedia = media.sort((a, b) => new Date(a.date) - new Date(b.date));
-      break;
+      return [...media].sort((a, b) => new Date(a.date) - new Date(b.date));
     case "titre":
-      sortedMedia = media.sort((a, b) => a.title.localeCompare(b.title));
-      break;
+      return [...media].sort((a, b) => a.title.localeCompare(b.title));
     default:
-      sortedMedia = media;
+      return media;
   }
-  return sortedMedia;
 };

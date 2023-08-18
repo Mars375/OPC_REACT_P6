@@ -1,99 +1,93 @@
 import { createElement } from "../utils/createElement.js";
 import { MediaFactory } from "../factories/MediaFactory.js";
+import { handleLikes } from "../utils/handleLikes.js";
 
 export class MediaCard {
   constructor(media) {
     this._media = media;
+    this._media.isLiked = false;
   }
 
+  // Create the section displaying media information, likes, and title
   createInformationSection() {
     const { likes, title } = this._media;
 
-    const $likes = createElement(
-      "p",
-      {
-        class: "media-card__likes",
-        'aria-label': `Nombre de likes : ${likes}`,
-        tabIndex: "0",
-        dataset: {
-          likes: likes
-        },
-        innerText: likes
-      });
+    const $likes = createElement("p", {
+      class: "media-card__likes",
+      'aria-label': `Number of likes: ${likes}`,
+      tabIndex: "0",
+      dataset: {
+        likes: likes
+      },
+      innerText: likes
+    });
 
-    const $likesIcon = createElement(
-      "i",
-      {
-        class: "fas fa-heart media-card__likes-icon",
-        'aria-label': "likes",
-        tabIndex: "-1",
-        ariaHidden: "true"
-      });
+    const $likesIcon = createElement("i", {
+      class: "fas fa-heart media-card__likes-icon",
+      'aria-label': "likes",
+      tabIndex: "-1",
+      ariaHidden: "true"
+    });
 
-    const $likeBtn = createElement(
-      "button",
-      {
-        class: "media-card__like-btn",
-        'aria-label': "CLiquer pour aimer la photo",
-        tabIndex: "0",
-      });
+    const $likeBtn = createElement("button", {
+      class: "media-card__like-btn",
+      'aria-label': "Click to like the photo",
+      tabIndex: "0",
+    });
     $likeBtn.append($likesIcon);
 
-    const $likeWrapper = createElement(
-      "div",
-      {
-        class: "media-card__like-wrapper",
-        dataset: {
-          isLiked: false,
-          mediaId: this._media.id
-        }
-      });
+    $likeBtn.addEventListener("click", () => {
+      handleLikes(this._media, $likes, $likeBtn, $likesIcon);
+      const totalLikes = document.querySelector('.photographer-sidebar__likes');
+      totalLikes.textContent = `${this._media.photographer.totalLikes} likes`;
+    });
+
+    const $likeWrapper = createElement("div", {
+      class: "media-card__like-wrapper",
+      dataset: {
+        isLiked: false,
+        mediaId: this._media.id
+      }
+    });
     $likeWrapper.append($likeBtn, $likes);
 
-    const $title = createElement(
-      "h3",
-      {
-        class: "media-card__title",
-        'aria-label': `Titre de la photo : ${title}`,
-        innerText: title
-      });
+    const $title = createElement("h3", {
+      class: "media-card__title",
+      'aria-label': `Photo Title: ${title}`,
+      innerText: title
+    });
 
-    const $informationSection = createElement(
-      "div",
-      {
-        class: "media-card__information",
-        'aria-label': "Plus d'informations",
-        tabIndex: "0"
-      });
+    const $informationSection = createElement("div", {
+      class: "media-card__information",
+      'aria-label': "More Information",
+      tabIndex: "0"
+    });
     $informationSection.append($likeWrapper, $title);
 
     return $informationSection;
   }
 
+  // Create the section displaying media (photo or video)
   createMediaSection() {
-
     const $media = new MediaFactory(this._media).createComponent();
 
-    const $mediaSection = createElement(
-      "div",
-      {
-        class: "media-card__media",
-        'aria-label': "Photo ou vidéo",
-        tabIndex: "0"
-      });
+    const $mediaSection = createElement("div", {
+      class: "media-card__media",
+      'aria-label': "Photo or Video",
+      tabIndex: "0"
+    });
     $mediaSection.append($media);
 
     return $mediaSection;
   }
 
+  // Create the entire media card
   createMediaCard() {
-    const $mediaCard = createElement(
-      "div",
-      {
-        class: "media-card",
-        'aria-label': "Photo ou vidéo",
-        tabIndex: "0"
-      });
+    const $mediaCard = createElement("div", {
+      class: "media-card",
+      'aria-label': "Photo or Video",
+      tabIndex: "0"
+    });
     $mediaCard.append(this.createMediaSection(), this.createInformationSection());
 
     return $mediaCard;

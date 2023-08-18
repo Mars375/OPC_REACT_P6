@@ -1,11 +1,16 @@
-import { PhotographerCard } from "../templates/PhotographerCard.js"
-import { MediaCard } from "../templates/MediaCard.js"
+import { PhotographerCard } from "../templates/PhotographerCard.js";
+import { MediaCard } from "../templates/MediaCard.js";
 
 export class CardFactory {
   constructor(data, type) {
-    this.data = data
-    this.type = type
+    // Store the data and type parameters
+    this.data = data;
+    this.type = type;
 
-    return this.type === 'photographer' ? new PhotographerCard(this.data) : new MediaCard(this.data)
+    // Depending on the type, create an instance of the corresponding card
+    // This uses a ternary operator to conditionally choose the card type
+    return this.type === 'photographer' ?
+      new PhotographerCard(this.data) :
+      new MediaCard(this.data);
   }
 }
