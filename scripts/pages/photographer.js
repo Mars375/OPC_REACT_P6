@@ -46,12 +46,12 @@ class App {
     modal.init();
 
     document.addEventListener('mediaSorted', (event) => {
-      const sortedMedias = event.detail;
+      const sortedMedias = event.detail.medias;
       this.mediaRenderer.renderMedias(sortedMedias, this._photographer);
     });
 
     const dropdown = new Dropdown(this._medias, '.sort-wrapper');
-    dropdown.sortAndRenderMedia('popularity');
+    dropdown.sortAndRenderMedia('Popularité');
   }
 
   // Initialize the app by fetching data and rendering the page
@@ -59,6 +59,7 @@ class App {
     this.spinnerLoader.show();
     await this.getData();
     await this.renderPage();
+    this.spinnerLoader.hide();
   }
 }
 

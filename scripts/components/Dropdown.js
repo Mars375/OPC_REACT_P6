@@ -2,14 +2,16 @@ import { createElement } from '../utils/createElement.js';
 import { sortMedia } from '../utils/sortMedia.js';
 
 export class Dropdown {
-  constructor(media, containerSelector) {
+  constructor(photographer, containerSelector) {
     this.options = ['Popularité', 'Date', 'Titre'];
-    this.containerSelector = document.querySelector(containerSelector);
+    this.$containerSelector = document.querySelector(containerSelector);
     this.selectedOption = this.options[0];
-    this._media = media;
+    this._media = photographer;
+    this.$dropdownButton = null;
+    this.$dropdownList = null;
+    this.$dropdownText = null;
 
     this.createDropdown();
-    this.sortAndRenderMedia(this.selectedOption);
   }
 
   // Create a dropdown item with event listener for click
@@ -28,14 +30,14 @@ export class Dropdown {
   }
 
   // Handle button click to expand/collapse dropdown list
-  handleDropdownButtonClick(dropdownButton, dropdownList) {
-    const isExpanded = dropdownButton.getAttribute('aria-expanded') === 'true';
-    dropdownButton.setAttribute('aria-expanded', !isExpanded);
-    dropdownList.style.display = isExpanded ? 'none' : 'block';
-    dropdownList.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
+  handleDropdownButtonClick() {
+    const isExpanded = this.$dropdownButton.getAttribute('aria-expanded') === 'true';
+    this.$dropdownButton.setAttribute('aria-expanded', !isExpanded);
+    this.$dropdownList.style.display = isExpanded ? 'none' : 'block';
+    this.$dropdownList.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
 
     const tabIndex = isExpanded ? '-1' : '0';
-    dropdownList.querySelectorAll('.dropdown__item').forEach(item => {
+    this.$dropdownList.querySelectorAll('.dropdown__item').forEach(item => {
       item.tabIndex = tabIndex;
     });
   }
@@ -44,47 +46,85 @@ export class Dropdown {
   createDropdown() {
     const dropdownLabel = createElement('label', {
       class: 'dropdown__label',
-      innerText: 'Sort by',
+      innerText: 'Trier par',
     });
 
-    const dropdownButton = createElement('button', {
+    this.$dropdownButton = createElement('button', {
       class: 'dropdown__button',
-      innerText: this.selectedOption,
       tabIndex: '0',
       'aria-expanded': 'false',
       'aria-label': 'Select a sorting criteria',
     });
 
-    const dropdownList = createElement('ul', {
+    this.$dropdownText = createElement('span', {
+      class: 'dropdown__text',
+      innerText: this.selectedOption,
+    });
+
+    const dropdownIcon = createElement('i', {
+      class: 'fas fa-chevron-down dropdown__icon',
+      'aria-hidden': 'true',
+    });
+
+    this.$dropdownList = createElement('ul', {
       class: 'dropdown__list',
-      style: 'display: none;',
       'aria-hidden': 'true',
     });
 
     this.options.forEach(option => {
       const dropdownItem = this.createDropdownItem(option);
-      dropdownList.append(dropdownItem);
+      this.$dropdownList.append(dropdownItem);
     });
 
-    dropdownButton.addEventListener('click', () => {
-      this.handleDropdownButtonClick(dropdownButton, dropdownList);
+    const dropdownItemsIcon = createElement('i', {
+      class: 'fas fa-chevron-up dropdown__icon',
+      'aria-hidden': 'true',
+    });
+
+    this.$dropdownButton.addEventListener('click', () => {
+      this.handleDropdownButtonClick(this.$dropdownButton, this.$dropdownList);
     });
 
     const dropdown = createElement('div', {
       class: 'dropdown',
     });
 
-    dropdown.append(dropdownButton, dropdownList);
-    this.containerSelector.append(dropdownLabel, dropdown);
+    this.$dropdownList.firstElementChild.append(dropdownItemsIcon);
+    this.$dropdownButton.append(this.$dropdownText, dropdownIcon);
+    dropdown.append(this.$dropdownButton, this.$dropdownList);
+    this.$containerSelector.append(dropdownLabel, dropdown);
+  }
+
+
+  // Reorder options based on selected option
+  reorderOptions() {
+    const selectedOptionIndex = this.options.indexOf(this.selectedOption);
+    const reorderedOptions = [...this.options];
+    reorderedOptions.splice(selectedOptionIndex, 1);
+    reorderedOptions.unshift(this.selectedOption);
+    this.options = reorderedOptions;
+  }
+
+
+  // Update dropdown list with new options
+  updateDropdownList() {
+    this.$dropdownList.innerHTML = '';
+    this.options.forEach(option => {
+      const dropdownItem = this.createDropdownItem(option);
+      this.$dropdownList.append(dropdownItem);
+    });
   }
 
   // Handle dropdown item click and update sorting and rendering
   handleDropdownItemClick(option) {
+    if (this.selectedOption === option) return this.handleDropdownButtonClick();
     this.selectedOption = option;
     this.sortAndRenderMedia(option);
-    const dropdownButton = document.querySelector('.dropdown__button');
-    const dropdownList = document.querySelector('.dropdown__list');
-    this.handleDropdownButtonClick(dropdownButton, dropdownList);
+    this.handleDropdownButtonClick();
+
+    this.$dropdownText.innerText = option;
+    this.reorderOptions();
+    this.updateDropdownList();
   }
 
   // Sort and render media based on selected option

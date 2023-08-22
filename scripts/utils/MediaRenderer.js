@@ -7,18 +7,17 @@ export class MediaRenderer {
   }
 
   // Render media cards and lightbox for medias
-  async renderMedias(data) {
+  async renderMedias(data, photographer) {
     this.$mediaWrapper.innerHTML = '';
-    const sortedMedias = data.medias; // Get the sorted medias from the data
 
-    sortedMedias.forEach((media, index) => {
-      const cardTemplate = new CardFactory(media, 'media', data);
+    data.forEach((media, index) => {
+      const cardTemplate = new CardFactory(media, 'media', photographer);
       const card = cardTemplate.createMediaCard();
       this.$mediaWrapper.appendChild(card);
 
       const mediaSection = card.querySelector('.media-card__media');
       mediaSection.addEventListener('click', () => {
-        const lightbox = new Lightbox(data, index, '.lightbox_modal');
+        const lightbox = new Lightbox(data, index, '.lightbox_modal', photographer);
         lightbox.init();
       });
     });

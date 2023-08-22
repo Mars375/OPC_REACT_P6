@@ -2,7 +2,8 @@ import { createElement } from "../utils/createElement.js";
 import { MediaFactory } from "../factories/MediaFactory.js";
 
 export class Lightbox {
-  constructor(medias, index, container) {
+  constructor(medias, index, container, photographer) {
+    this._photographer = photographer;
     this._medias = medias;
     this._index = index;
     this.$container = document.querySelector(container);
@@ -43,7 +44,7 @@ export class Lightbox {
       class: 'lightbox__caption',
     });
 
-    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index]).createComponent();
+    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index], this._photographer).createComponent();
     this.$lightboxMediaContent.controls = true;
 
     this.$lightboxPrev = createElement('button', {

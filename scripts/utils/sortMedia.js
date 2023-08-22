@@ -4,7 +4,7 @@ export const sortMedia = (photographer, option) => {
   let sortedMedias;
 
   switch (option) {
-    case "popularity":
+    case "popularité":
       // Sort medias by popularity (likes)
       sortedMedias = [...medias].sort((a, b) => b.likes - a.likes);
       break;
@@ -12,7 +12,7 @@ export const sortMedia = (photographer, option) => {
       // Sort medias by date
       sortedMedias = [...medias].sort((a, b) => new Date(a.date) - new Date(b.date));
       break;
-    case "title":
+    case "titre":
       // Sort medias by title (alphabetically)
       sortedMedias = [...medias].sort((a, b) => a.title.localeCompare(b.title));
       break;
