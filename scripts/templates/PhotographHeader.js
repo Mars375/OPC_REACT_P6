@@ -47,7 +47,7 @@ export class PhotographHeader {
       'aria-label': `Portrait du photographe : ${this._data.name}`,
       tabIndex: '0',
       alt: `${this._data.name} portrait`,
-      src: `assets/photographers/${this._data.portrait}`
+      src: this._data.portrait
     });
 
     $portraitWrapper.append($photographPortrait);

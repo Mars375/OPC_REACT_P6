@@ -2,6 +2,7 @@ export function handleLikes(media, $likesElement, $likeBtn, $likesIcon) {
   const likesDelta = media.isLiked ? -1 : 1;
   media._data.likes += likesDelta;
   media.photographer.totalLikes += likesDelta;
+  console.log(media.photographer.totalLikes);
 
   $likesElement.innerText = media._data.likes;
   media.isLiked = !media.isLiked;

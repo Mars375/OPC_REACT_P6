@@ -39,9 +39,4 @@ export class Media {
   get price() {
     return this._data.price;
   }
-  // Setter for updating the likes
-
-  set likes(newLikes) {
-    this._data.likes = newLikes;
-  }
 }

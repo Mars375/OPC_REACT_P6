@@ -3,7 +3,8 @@ import { MediaFactory } from "../factories/MediaFactory.js";
 import { handleLikes } from "../utils/handleLikes.js";
 
 export class MediaCard {
-  constructor(media) {
+  constructor(media, photographer) {
+    this._photographer = photographer;
     this._media = media;
     this._media.isLiked = false;
   }
@@ -69,7 +70,7 @@ export class MediaCard {
 
   // Create the section displaying media (photo or video)
   createMediaSection() {
-    const $media = new MediaFactory(this._media).createComponent();
+    const $media = new MediaFactory(this._media, this._photographer).createComponent();
 
     const $mediaSection = createElement("div", {
       class: "media-card__media",

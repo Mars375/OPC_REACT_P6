@@ -14,9 +14,8 @@ export class Loader {
 
   show() {
     this.loaderContainer.style.display = 'flex';
-  }
-
-  hide() {
-    this.loaderContainer.style.display = 'none';
+    setTimeout(() => {
+      this.loaderContainer.style.display = 'none';
+    }, 1000);
   }
 }

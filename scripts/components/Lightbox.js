@@ -10,6 +10,7 @@ export class Lightbox {
     this.$lightboxClose = null;
     this.$lightboxPrev = null;
     this.$lightboxNext = null;
+    this.$lightboxMediaContent = null;
   }
 
   // Create the lightbox structure
@@ -39,23 +40,33 @@ export class Lightbox {
     });
 
     const $lightboxMedia = createElement('div', {
-      class: 'lightbox__media',
+      class: 'lightbox__caption',
     });
 
-    const lightboxMediaContent = new MediaFactory(this._medias[this._index]).createComponent();
-    lightboxMediaContent.controls = true;
+    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index]).createComponent();
+    this.$lightboxMediaContent.controls = true;
 
     this.$lightboxPrev = createElement('button', {
       class: 'lightbox__prev',
-      innerText: 'Previous',
     });
+
+    const $lightboxPrevIcon = createElement('i', {
+      class: 'fas fa-chevron-left',
+      'aria-label': 'Previous caption'
+    })
 
     this.$lightboxNext = createElement('button', {
       class: 'lightbox__next',
-      innerText: 'Next',
     });
 
-    $lightboxMedia.append(lightboxMediaContent);
+    const $lightboxNextIcon = createElement('i', {
+      class: 'fas fa-chevron-right',
+      'aria-label': 'Next caption'
+    })
+
+    $lightboxMedia.append(this.$lightboxMediaContent);
+    this.$lightboxPrev.append($lightboxPrevIcon);
+    this.$lightboxNext.append($lightboxNextIcon);
     $lightboxContent.append(this.$lightboxPrev, $lightboxMedia, this.$lightboxNext, this.$lightboxClose);
     this.$lightboxClose.append($lightboxCloseIcon);
     $lightboxModal.appendChild($lightboxContent);
@@ -66,10 +77,12 @@ export class Lightbox {
 
   // Update the content of the lightbox media
   updateMediaContent() {
-    const $lightboxMediaContent = new MediaFactory(this._medias[this._index]).createComponent();
-    const $lightboxMedia = this.$lightbox.querySelector('.lightbox__media');
+    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index]).createComponent();
+    this.$lightboxMediaContent.controls = true;
+
+    const $lightboxMedia = this.$lightbox.querySelector('.lightbox__caption');
     $lightboxMedia.innerHTML = '';
-    $lightboxMedia.append($lightboxMediaContent);
+    $lightboxMedia.append(this.$lightboxMediaContent);
   }
 
   // Navigate to the previous or next media

@@ -3,8 +3,8 @@ import { createElement } from "../utils/createElement.js";
 export class MediaFactory {
   $media;
 
-  constructor(data) {
-    const { mediaType, title, mediaLink, photographer } = data;
+  constructor(data, photographer) {
+    const { mediaType, title, mediaLink } = data;
 
     // Create media element based on mediaType
     this.$media = createElement(mediaType === 'image' ? 'img' : 'video');
