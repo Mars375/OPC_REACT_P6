@@ -6,6 +6,7 @@ import { PhotographHeader } from '../templates/PhotographHeader.js';
 import { PhotographerService } from '../services/PhotographerService.js';
 import { MediaService } from '../services/MediaService.js';
 import { MediaRenderer } from '../utils/MediaRenderer.js';
+import { getURLParams } from '../utils/getURLParams.js';
 
 class App {
   _photographer;
@@ -17,13 +18,14 @@ class App {
     this.$mediaWrapper = document.querySelector('.media-wrapper');
     this.spinnerLoader = new Loader();
     this.mediaRenderer = new MediaRenderer(this.$mediaWrapper);
+    this.params = getURLParams(); // Get URL parameters
   }
 
   // Fetch data and process medias related to the photographer
   async getData() {
     try {
       // Fetch the photographer and their media data using services
-      this._photographer = await this.photographerService.getPhotographer();
+      this._photographer = await this.photographerService.getPhotographer(this.params.id);
       this._medias = await this.mediaService.getMediasByPhotographerId(this._photographer.id, this._photographer);
     } catch (error) {
       console.error(`Error fetching data: ${error.message}`);
