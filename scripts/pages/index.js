@@ -34,9 +34,6 @@ class App {
       // Append the card to the photographer section
       this.photographerSection.append(card);
     });
-
-    // Hide the loading spinner after displaying the photographer cards
-    this.spinnerLoader.hide();
   }
 
   // Show the loading spinner, fetch photographers' data, and display their cards
