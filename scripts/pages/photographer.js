@@ -42,7 +42,7 @@ class App {
     const sidebar = new PhotographerSidebar(this._photographer, '.sidebar-wrapper');
     sidebar.createPhotographerSidebar();
 
-    const modal = new ModalForm('.modal');
+    const modal = new ModalForm(this._photographer, '.modal', '.modal__inner', '.photograph-header__button', '.modal__close', '.modal__title');
     modal.init();
 
     document.addEventListener('mediaSorted', (event) => {
@@ -59,7 +59,6 @@ class App {
     this.spinnerLoader.show();
     await this.getData();
     await this.renderPage();
-    this.spinnerLoader.hide();
   }
 }
 

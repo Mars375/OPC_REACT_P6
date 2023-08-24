@@ -16,7 +16,13 @@ export class PhotographerSidebar {
     // Create an element to display the total likes
     const $likesElement = createElement('p', {
       class: 'photographer-sidebar__likes',
-      innerText: `${this._photographer.totalLikes} likes`,
+      innerText: `${this._photographer.totalLikes}`,
+    });
+
+    // Create a heart icon
+    const $heartIcon = createElement('i', {
+      class: 'fas fa-heart',
+      'aria-label': 'likes',
     });
 
     // Create an element to display the price
@@ -26,6 +32,7 @@ export class PhotographerSidebar {
     });
 
     // Append the likes and price elements to the sidebar container
+    $likesElement.append($heartIcon);
     $sidebarContainer.append($priceElement, $likesElement);
 
     // Append the sidebar container to the provided container

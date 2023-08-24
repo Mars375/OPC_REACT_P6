@@ -15,9 +15,19 @@ export class Loader {
 
   show() {
     this.loaderContainer.style.display = 'flex';
+
+    setTimeout(() => {
+      this.loaderContainer.style.opacity = '0';
+
+      this.loaderContainer.addEventListener('transitionend', this.handleTransitionEnd);
+    }, 1300);
   }
 
-  hide() {
-    this.loaderContainer.style.display = 'none';
-  }
+  handleTransitionEnd = (event) => {
+    if (event.propertyName === 'opacity' && parseFloat(event.target.style.opacity) === 0) {
+      this.loaderContainer.style.display = 'none';
+
+      this.loaderContainer.removeEventListener('transitionend', this.handleTransitionEnd);
+    }
+  };
 }
