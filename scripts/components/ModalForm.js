@@ -14,6 +14,10 @@ export class ModalForm {
     // Bind methods to the class instance
     this.displayModal = this.displayModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleFocusTrap = this.handleFocusTrap.bind(this);
+
+    // Create the modal form and its content
+    this.createModal();
   }
 
   // Create the modal form and its content
@@ -72,13 +76,39 @@ export class ModalForm {
     $contactForm.append($modalContent, $contactFormSubmitButton);
     this.$innerModal.appendChild($contactForm);
     this.$modalTitle.innerHTML += `<br> ${this._photographer.name}`;
+
+    // Add event listener to handle focus trapping
+    this.$modal.addEventListener('keydown', this.handleFocusTrap);
   }
 
-  // Close the modal when the user clicks outside of it or presses the ESC key
-  closeModalOnOutsideClick(event) {
-    if (event.target === document.body || event.key === 'Escape') {
-      this.closeModal();
+  // Function to handle focus trapping inside the modal
+  handleFocusTrap(event) {
+    if (event.key === 'Tab') {
+      const focusableElements = this.$modal.querySelectorAll('.modal__form__input');
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstFocusable) {
+        // Shift + Tab from the first element
+        event.preventDefault();
+        lastFocusable.focus();
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        // Tab from the last element
+        event.preventDefault();
+        firstFocusable.focus();
+      }
     }
+  }
+
+  // Initialize the modal form
+  init() {
+    this.$showModalButton.addEventListener('click', () => {
+      this.displayModal();
+      this.$modal.focus();
+    });
+    this.$innerModal.focus();
+    document.body.classList.remove('overlay-active');
+
   }
 
   // Display the modal and add event listeners
@@ -93,6 +123,13 @@ export class ModalForm {
     document.addEventListener('keydown', this.closeModalOnOutsideClick.bind(this));
   }
 
+  // Close the modal when the user clicks outside of it or presses the ESC key
+  closeModalOnOutsideClick(event) {
+    if (event.target === document.body || event.key === 'Escape') {
+      this.closeModal();
+    }
+  }
+
   // Close the modal and remove event listeners
   closeModal() {
     this.$modal.style.display = 'none';
@@ -103,12 +140,5 @@ export class ModalForm {
     // Remove event listeners to prevent memory leaks
     document.removeEventListener('click', this.closeModalOnOutsideClick.bind(this));
     document.removeEventListener('keydown', this.closeModalOnOutsideClick.bind(this));
-  }
-
-  // Initialize the modal form
-  init() {
-    this.createModal();
-    this.$showModalButton.addEventListener('click', this.displayModal);
-    document.body.classList.remove('overlay-active');
   }
 }
