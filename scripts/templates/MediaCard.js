@@ -74,7 +74,8 @@ export class MediaCard {
 
     const $mediaSection = createElement("div", {
       class: "media-card__media",
-      'aria-label': "Photo or Video",
+      'aria-label': `${this._media.title}, closeup view`,
+
       tabIndex: "0"
     });
     $mediaSection.append($media);
@@ -84,7 +85,7 @@ export class MediaCard {
 
   // Create the entire media card
   createMediaCard() {
-    const $mediaCard = createElement("div", {
+    const $mediaCard = createElement("article", {
       class: "media-card",
       'aria-label': "Photo or Video",
       tabIndex: "0"

@@ -265,8 +265,7 @@ form button {
 .lightbox__close {
 	position: absolute;
 	top: 15px;
-	right: 15px;
-	color: #333;
+	right: 25px;
 	font-size: 24px;
 	cursor: pointer;
 }
@@ -274,14 +273,14 @@ form button {
 .lightbox__content {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	max-height: 70vh;
 }
 
 .lightbox__prev,
 .lightbox__next {
-	font-size: 28px;
-	color: #333;
+	font-size: 42px;
+	color: #901c1c;
 	cursor: pointer;
 	user-select: none;
 }

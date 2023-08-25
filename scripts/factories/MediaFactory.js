@@ -18,6 +18,7 @@ export class MediaFactory {
       src: mediaLink,
       alt: `${title} by ${photographer.name}`,
       ariaLabel: `${title} by ${photographer.name}`,
+      tabindex: '0',
     });
   }
 

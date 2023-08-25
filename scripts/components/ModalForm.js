@@ -17,6 +17,11 @@ export class ModalForm {
 
   // Create the modal form and its content
   createModal() {
+    this.$modal.setAttribute('aria-hidden', 'true');
+    this.$modal.setAttribute('aria-label', `Contact me ${this._photographer.name}`);
+    this.$modal.setAttribute('aria-labelledby', 'modal__title');
+
+    this.$closeModalButton.setAttribute('aria-label', 'Close the modal');
 
     const $modalContent = createElement('div', {
       class: 'modal__content'
@@ -35,8 +40,8 @@ export class ModalForm {
 
     formElements.forEach(element => {
       const inputElement = element.type === 'textarea'
-        ? createElement('textarea', { class: 'modal__form__input', ...element })
-        : createElement('input', { class: 'modal__form__input', ...element });
+        ? createElement('textarea', { class: 'modal__form__input', ...element, 'aria-label': element.label })
+        : createElement('input', { class: 'modal__form__input', ...element, 'aria-label': element.label });
 
       const labelElement = createElement('label', {
         class: 'modal__form__label',
@@ -50,7 +55,8 @@ export class ModalForm {
     const $contactFormSubmitButton = createElement('button', {
       class: 'modal__form__submit',
       type: 'submit',
-      innerText: 'Envoyer'
+      innerText: 'Envoyer',
+      'aria-label': 'Submit the form',
     });
 
     $contactForm.addEventListener('submit', (event) => {

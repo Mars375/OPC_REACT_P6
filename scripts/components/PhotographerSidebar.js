@@ -16,7 +16,7 @@ export class PhotographerSidebar {
     // Create an element to display the total likes
     const $likesElement = createElement('p', {
       class: 'photographer-sidebar__likes',
-      innerText: `${this._photographer.totalLikes}`,
+      innerText: `${this._photographer.totalLikes} `,
     });
 
     // Create a heart icon

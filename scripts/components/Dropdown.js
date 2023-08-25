@@ -20,6 +20,7 @@ export class Dropdown {
       class: 'dropdown__item',
       innerText: option,
       tabIndex: '0',
+      role: 'option',
     });
 
     dropdownItem.addEventListener('click', () => {
@@ -33,6 +34,7 @@ export class Dropdown {
   handleDropdownButtonClick() {
     const isExpanded = this.$dropdownButton.getAttribute('aria-expanded') === 'true';
     this.$dropdownButton.setAttribute('aria-expanded', !isExpanded);
+    this.$dropdownButton.setAttribute('aria-label', `Order by ${this.selectedOption}`);
     this.$dropdownList.style.display = isExpanded ? 'none' : 'block';
     this.$dropdownList.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
 
@@ -47,13 +49,16 @@ export class Dropdown {
     const dropdownLabel = createElement('label', {
       class: 'dropdown__label',
       innerText: 'Trier par',
+      id: 'dropdown-label',
     });
 
     this.$dropdownButton = createElement('button', {
       class: 'dropdown__button',
       tabIndex: '0',
+      'aria-haspopup': 'listbox',
       'aria-expanded': 'false',
-      'aria-label': 'Select a sorting criteria',
+      'aria-label': `Order by ${this.selectedOption}`,
+      'aria-labelledby': 'dropdown-label',
     });
 
     this.$dropdownText = createElement('span', {
@@ -69,6 +74,7 @@ export class Dropdown {
     this.$dropdownList = createElement('ul', {
       class: 'dropdown__list',
       'aria-hidden': 'true',
+      role: 'listbox',
     });
 
     this.options.forEach(option => {
@@ -95,7 +101,6 @@ export class Dropdown {
     this.$containerSelector.append(dropdownLabel, dropdown);
   }
 
-
   // Reorder options based on selected option
   reorderOptions() {
     const selectedOptionIndex = this.options.indexOf(this.selectedOption);
@@ -104,7 +109,6 @@ export class Dropdown {
     reorderedOptions.unshift(this.selectedOption);
     this.options = reorderedOptions;
   }
-
 
   // Update dropdown list with new options
   updateDropdownList() {

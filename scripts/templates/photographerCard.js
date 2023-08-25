@@ -54,8 +54,7 @@ export class PhotographerCard {
     const link = createElement('a', {
       class: 'card-photographer__link',
       href: `./photographer.html?id=${this._photographer.id}`,
-      'aria-roledescription': '',
-      'aria-label': '',
+      'aria-label': `Photographer ${this._photographer.name}`,
       tabindex: '0'
     });
 

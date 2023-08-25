@@ -2,11 +2,12 @@ import { createElement } from "../utils/createElement.js";
 import { MediaFactory } from "../factories/MediaFactory.js";
 
 export class Lightbox {
-  constructor(medias, index, photographer) {
+  constructor(medias, index, container, photographer) {
     this._photographer = photographer;
     this._medias = medias;
     this._index = index;
     this.$lightboxInner = null;
+    this.$container = document.querySelector(container);
 
     this.createLightbox = this.createLightbox.bind(this);
     this.updateMediaContent = this.updateMediaContent.bind(this);
@@ -17,10 +18,6 @@ export class Lightbox {
 
   // Create the lightbox structure
   createLightbox() {
-    this.$lightbox = createElement('div', {
-      class: 'lightbox',
-    });
-
     this.$lightboxInner = createElement('div', {
       class: 'lightbox__inner',
       dataset: {
@@ -30,12 +27,19 @@ export class Lightbox {
 
     const $lightboxClose = createElement('button', {
       class: 'lightbox__close',
-    });
-
-    const $lightboxCloseIcon = createElement('i', {
-      class: 'fas fa-times',
       'aria-label': 'Close the lightbox',
     });
+
+    const $lightboxCloseIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    $lightboxCloseIcon.setAttribute("width", "42");
+    $lightboxCloseIcon.setAttribute("height", "42");
+    $lightboxCloseIcon.setAttribute("viewBox", "0 0 42 42");
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", "M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z");
+    path.setAttribute("fill", "#901c1c");
+
+    $lightboxCloseIcon.append(path);
 
     const $lightboxContent = createElement('div', {
       class: 'lightbox__content',
@@ -50,20 +54,20 @@ export class Lightbox {
 
     const $lightboxPrev = createElement('button', {
       class: 'lightbox__prev',
+      'aria-label': 'Previous caption',
     });
 
     const $lightboxPrevIcon = createElement('i', {
       class: 'fas fa-chevron-left',
-      'aria-label': 'Previous caption',
     });
 
     const $lightboxNext = createElement('button', {
       class: 'lightbox__next',
+      'aria-label': 'Next caption',
     });
 
     const $lightboxNextIcon = createElement('i', {
       class: 'fas fa-chevron-right',
-      'aria-label': 'Next caption',
     });
 
     $lightboxMedia.append(this.$lightboxMediaContent);
@@ -169,7 +173,7 @@ export class Lightbox {
   init() {
     this.$lightboxInner = this.createLightbox();
     document.body.classList.add('overlay-active');
-    document.body.appendChild(this.$lightboxInner);
+    this.$container.appendChild(this.$lightboxInner);
     this.initEventListeners();
   }
 }

@@ -20,6 +20,13 @@ export class MediaRenderer {
         const lightbox = new Lightbox(data, index, '.lightbox_modal', photographer);
         lightbox.init();
       });
+
+      mediaSection.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          const lightbox = new Lightbox(data, index, '.lightbox_modal', photographer);
+          lightbox.init();
+        }
+      });
     });
   }
 }
