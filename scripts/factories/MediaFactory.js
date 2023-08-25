@@ -1,4 +1,4 @@
-import { createElement } from "../utils/createElement.js";
+import { createElement } from '../utils/createElement.js';
 
 export class MediaFactory {
   $media;
@@ -17,7 +17,7 @@ export class MediaFactory {
     Object.assign(this.$media, {
       src: mediaLink,
       alt: `${title} by ${photographer.name}`,
-      ariaLabel: `${title} by ${photographer.name}`,
+      'aria-label': `${title} by ${photographer.name}`,
       tabindex: '0',
     });
   }

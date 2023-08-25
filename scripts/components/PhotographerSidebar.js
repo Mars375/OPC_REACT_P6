@@ -1,4 +1,4 @@
-import { createElement } from "../utils/createElement.js";
+import { createElement } from '../utils/createElement.js';
 
 export class PhotographerSidebar {
   constructor(photographer, container) {
@@ -7,10 +7,15 @@ export class PhotographerSidebar {
     this.$container = document.querySelector(container);
   }
 
+  // Create the photographer sidebar
   createPhotographerSidebar() {
     // Create the sidebar container element
     const $sidebarContainer = createElement('div', {
       class: 'photographer-sidebar photographer-sidebar--bottom'
+    });
+
+    const $likesContainer = createElement('div', {
+      class: 'photographer-sidebar__likes-container'
     });
 
     // Create an element to display the total likes
@@ -32,8 +37,8 @@ export class PhotographerSidebar {
     });
 
     // Append the likes and price elements to the sidebar container
-    $likesElement.append($heartIcon);
-    $sidebarContainer.append($priceElement, $likesElement);
+    $likesContainer.append($heartIcon, $likesElement);
+    $sidebarContainer.append($priceElement, $likesContainer);
 
     // Append the sidebar container to the provided container
     this.$container.append($sidebarContainer);

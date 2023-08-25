@@ -1,22 +1,31 @@
 import { createElement } from "../utils/createElement.js";
 import { MediaFactory } from "../factories/MediaFactory.js";
+import { createLightboxButton, handleKeydown, handleDocumentClick } from "../utils/lightboxUtils.js";
 
 export class Lightbox {
   constructor(medias, index, container, photographer) {
+    // Photographer's information, media, index, and container initialization.
     this._photographer = photographer;
     this._medias = medias;
     this._index = index;
     this.$lightboxInner = null;
     this.$container = document.querySelector(container);
+    this.eventHandlers = [];
 
+    // Function binding for class methods.
     this.createLightbox = this.createLightbox.bind(this);
     this.updateMediaContent = this.updateMediaContent.bind(this);
     this.navigate = this.navigate.bind(this);
     this.initEventListeners = this.initEventListeners.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
+    this.removeEventListeners = this.removeEventListeners.bind(this);
+
+    this.$lightboxClose = null;
+    this.$lightboxPrev = null;
+    this.$lightboxNext = null;
   }
 
-  // Create the lightbox structure
+  // Create the lightbox structure.
   createLightbox() {
     this.$lightboxInner = createElement('div', {
       class: 'lightbox__inner',
@@ -25,11 +34,7 @@ export class Lightbox {
       },
     });
 
-    const $lightboxClose = createElement('button', {
-      class: 'lightbox__close',
-      'aria-label': 'Close the lightbox',
-    });
-
+    this.$lightboxClose = createLightboxButton('Close the lightbox', this.closeLightbox, null, 'lightbox__close');
     const $lightboxCloseIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     $lightboxCloseIcon.setAttribute("width", "42");
     $lightboxCloseIcon.setAttribute("height", "42");
@@ -52,35 +57,27 @@ export class Lightbox {
     this.$lightboxMediaContent = new MediaFactory(this._medias[this._index], this._photographer).createComponent();
     this.$lightboxMediaContent.controls = true;
 
-    const $lightboxPrev = createElement('button', {
-      class: 'lightbox__prev',
-      'aria-label': 'Previous caption',
-    });
-
+    this.$lightboxPrev = createLightboxButton('Previous caption', () => this.navigate(-1), null, 'lightbox__prev');
     const $lightboxPrevIcon = createElement('i', {
       class: 'fas fa-chevron-left',
     });
 
-    const $lightboxNext = createElement('button', {
-      class: 'lightbox__next',
-      'aria-label': 'Next caption',
-    });
-
+    this.$lightboxNext = createLightboxButton('Next caption', () => this.navigate(1), null, 'lightbox__next');
     const $lightboxNextIcon = createElement('i', {
       class: 'fas fa-chevron-right',
     });
 
     $lightboxMedia.append(this.$lightboxMediaContent);
-    $lightboxPrev.append($lightboxPrevIcon);
-    $lightboxNext.append($lightboxNextIcon);
-    $lightboxContent.append($lightboxPrev, $lightboxMedia, $lightboxNext, $lightboxClose);
-    $lightboxClose.append($lightboxCloseIcon);
+    this.$lightboxPrev.append($lightboxPrevIcon);
+    this.$lightboxNext.append($lightboxNextIcon);
+    $lightboxContent.append(this.$lightboxPrev, $lightboxMedia, this.$lightboxNext, this.$lightboxClose);
+    this.$lightboxClose.append($lightboxCloseIcon);
     this.$lightboxInner.appendChild($lightboxContent);
 
     return this.$lightboxInner;
   }
 
-  // Update the content of the lightbox media
+  // Update the content of the lightbox media.
   updateMediaContent() {
     this.$lightboxMediaContent = new MediaFactory(this._medias[this._index], this._photographer).createComponent();
     this.$lightboxMediaContent.controls = true;
@@ -90,86 +87,54 @@ export class Lightbox {
     $lightboxMedia.append(this.$lightboxMediaContent);
   }
 
-  // Navigate to the previous or next media
+  // Navigate to the previous or next media.
   navigate(indexDiff) {
     this._index = (this._index + indexDiff + this._medias.length) % this._medias.length;
     this.updateMediaContent();
   }
 
-  // Initialize event listeners for the lightbox
+  // Initialize event listeners for the lightbox.
   initEventListeners() {
-    const $lightboxClose = this.$lightboxInner.querySelector('.lightbox__close');
-    const $lightboxPrev = this.$lightboxInner.querySelector('.lightbox__prev');
-    const $lightboxNext = this.$lightboxInner.querySelector('.lightbox__next');
+    const lightboxButtons = [
+      { element: this.$lightboxClose, event: 'click', handler: this.closeLightbox },
+      { element: this.$lightboxPrev, event: 'click', handler: () => this.navigate(-1) },
+      { element: this.$lightboxNext, event: 'click', handler: () => this.navigate(1) },
+    ];
 
-    $lightboxClose.addEventListener('click', this.closeLightbox);
-    $lightboxPrev.addEventListener('click', () => {
-      this.navigate(-1);
+    lightboxButtons.forEach(({ element, event, handler }) => {
+      element.addEventListener(event, handler);
+      this.eventHandlers.push({ element, event, handler });
     });
-    $lightboxNext.addEventListener('click', () => {
-      this.navigate(1);
-    });
+
+    const focusableElements = this.$lightboxInner.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    const firstFocusableElement = focusableElements[0];
+    firstFocusableElement.focus();
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        this.closeLightbox();
-      }
-      if (event.key === 'ArrowLeft') {
-        this.navigate(-1);
-      }
-      if (event.key === 'ArrowRight') {
-        this.navigate(1);
-      }
+      handleKeydown(event, this);
     });
 
     document.addEventListener('click', (event) => {
-      if (event.target === document.body) {
-        this.closeLightbox();
-      }
+      handleDocumentClick(event, this);
     });
   }
 
-  // Close the lightbox
+  // Close the lightbox.
   closeLightbox() {
     this.$lightboxInner.remove();
     document.body.classList.remove('overlay-active');
     this.removeEventListeners();
   }
 
-  // Remove event listeners when they are no longer needed
+  // Remove event listeners when they are no longer needed.
   removeEventListeners() {
-    const $lightboxClose = this.$lightboxInner.querySelector('.lightbox__close');
-    const $lightboxPrev = this.$lightboxInner.querySelector('.lightbox__prev');
-    const $lightboxNext = this.$lightboxInner.querySelector('.lightbox__next');
-
-    $lightboxClose.removeEventListener('click', this.closeLightbox);
-    $lightboxPrev.removeEventListener('click', () => {
-      this.navigate(-1);
+    this.eventHandlers.forEach(({ element, event, handler }) => {
+      element.removeEventListener(event, handler);
     });
-    $lightboxNext.removeEventListener('click', () => {
-      this.navigate(1);
-    });
-
-    document.removeEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        this.closeLightbox();
-      }
-      if (event.key === 'ArrowLeft') {
-        this.navigate(-1);
-      }
-      if (event.key === 'ArrowRight') {
-        this.navigate(1);
-      }
-    });
-
-    document.removeEventListener('click', (event) => {
-      if (event.target === document.body) {
-        this.closeLightbox();
-      }
-    });
+    this.eventHandlers = [];
   }
 
-  // Initialize the lightbox
+  // Initialize the lightbox.
   init() {
     this.$lightboxInner = this.createLightbox();
     document.body.classList.add('overlay-active');

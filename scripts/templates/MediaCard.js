@@ -40,7 +40,7 @@ export class MediaCard {
     $likeBtn.addEventListener("click", () => {
       handleLikes(this._media, $likes, $likeBtn, $likesIcon, this._photographer);
       const totalLikes = document.querySelector('.photographer-sidebar__likes');
-      totalLikes.textContent = `${this._photographer.totalLikes} likes`;
+      totalLikes.innerText = `${this._photographer.totalLikes}`;
     });
 
     const $likeWrapper = createElement("div", {

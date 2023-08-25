@@ -1,7 +1,7 @@
 import { Query } from '../helpers/query.js';
 import { Loader } from '../components/Loader.js';
 import { Photographer } from '../models/Photographer.js';
-import { CardFactory } from '../factories/cardFactory.js';
+import { CardFactory } from '../factories/CardFactory.js';
 
 class App {
   constructor() {
@@ -11,36 +11,43 @@ class App {
     // Get the section element where photographer cards will be displayed
     this.photographerSection = document.querySelector('.photographer_section');
 
-    // Create an instance of the Loader component for showing loading spinner
+    // Create an instance of the Loader component for showing a loading spinner
     this.spinnerLoader = new Loader();
   }
 
   // Fetch photographers' data using the query and return the 'photographers' array
   async getPhotographers() {
-    const data = await this.query.fetch();
-    return data.photographers;
+    try {
+      const data = await this.query.fetch();
+      return data.photographers;
+    } catch (error) {
+      throw new Error(error); // Throw an error if fetching fails
+    }
   }
 
-  // Loop through each photographer's data, create and display their cards
-  displayPhotographers(photographers) {
-    photographers.forEach(photographerData => {
-      // Create a Photographer instance from the data
-      const photographer = new Photographer(photographerData);
-
-      // Create a CardFactory instance to generate the photographer's card
-      const cardFactory = new CardFactory(photographer, 'photographer');
-      const card = cardFactory.createCard();
-
-      // Append the card to the photographer section
-      this.photographerSection.append(card);
-    });
+  // Create and return a photographer card based on the provided data
+  displayPhotographerCard(photographerData) {
+    const photographer = new Photographer(photographerData);
+    const cardFactory = new CardFactory(photographer, 'photographer');
+    return cardFactory.createCard();
   }
 
   // Show the loading spinner, fetch photographers' data, and display their cards
   async init() {
     this.spinnerLoader.show();
-    const photographers = await this.getPhotographers();
-    this.displayPhotographers(photographers);
+    try {
+      const photographers = await this.getPhotographers();
+
+      // Batch insertions using a DocumentFragment to minimize repaints
+      const fragment = document.createDocumentFragment();
+      photographers.forEach(photographerData => {
+        const card = this.displayPhotographerCard(photographerData);
+        fragment.appendChild(card);
+      });
+      this.photographerSection.appendChild(fragment);
+    } catch (error) {
+      console.error('Error fetching photographers:', error);
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import { sortMedia } from '../utils/sortMedia.js';
 
 export class Dropdown {
   constructor(photographer, containerSelector) {
+    // Dropdown options
     this.options = ['Popularité', 'Date', 'Titre'];
     this.$containerSelector = document.querySelector(containerSelector);
     this.selectedOption = this.options[0];
@@ -11,6 +12,7 @@ export class Dropdown {
     this.$dropdownList = null;
     this.$dropdownText = null;
 
+    // Create the dropdown when the class is instantiated
     this.createDropdown();
   }
 
@@ -23,6 +25,7 @@ export class Dropdown {
       role: 'option',
     });
 
+    // Handle click event for the dropdown item
     dropdownItem.addEventListener('click', () => {
       this.handleDropdownItemClick(option);
     });
@@ -77,6 +80,7 @@ export class Dropdown {
       role: 'listbox',
     });
 
+    // Create dropdown items and add event listeners
     this.options.forEach(option => {
       const dropdownItem = this.createDropdownItem(option);
       this.$dropdownList.append(dropdownItem);
@@ -87,6 +91,7 @@ export class Dropdown {
       'aria-hidden': 'true',
     });
 
+    // Handle click event for the dropdown button
     this.$dropdownButton.addEventListener('click', () => {
       this.handleDropdownButtonClick(this.$dropdownButton, this.$dropdownList);
     });

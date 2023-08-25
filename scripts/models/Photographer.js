@@ -36,6 +36,6 @@ export class Photographer {
 
   // Getter for photographer's price
   get price() {
-    return `${this._data.price}€ / jour`;
+    return `${this._data.price}€ / day`;
   }
 }

@@ -1,4 +1,4 @@
-import { CardFactory } from '../factories/cardFactory.js';
+import { CardFactory } from '../factories/CardFactory.js';
 import { Lightbox } from '../components/Lightbox.js';
 
 export class MediaRenderer {
