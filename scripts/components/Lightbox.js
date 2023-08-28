@@ -54,7 +54,7 @@ export class Lightbox {
       class: 'lightbox__caption',
     });
 
-    this.$lightboxMediaContent = MediaFactory.createMedia(this._media, this._photographer).createComponent();
+    this.$lightboxMediaContent = MediaFactory.createMedia(this._medias[this._index], this._photographer).createComponent();
 
     this.$lightboxMediaContent.controls = true;
 
@@ -80,7 +80,7 @@ export class Lightbox {
 
   // Update the content of the lightbox media.
   updateMediaContent() {
-    this.$lightboxMediaContent = MediaFactory.createMedia(this._media, this._photographer).createComponent();
+    this.$lightboxMediaContent = MediaFactory.createMedia(this._medias[this._index], this._photographer).createComponent();
     this.$lightboxMediaContent.controls = true;
 
     const $lightboxMedia = this.$lightboxInner.querySelector('.lightbox__caption');
