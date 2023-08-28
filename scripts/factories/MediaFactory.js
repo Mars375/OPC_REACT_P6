@@ -1,38 +1,15 @@
-import { createElement } from '../utils/createElement.js';
-
+import { ImageMedia } from '../media/ImageMedia.js';
+import { VideoMedia } from '../media/VideoMedia.js';
 export class MediaFactory {
-  $media;
-
-  constructor(data, photographer) {
-    const { mediaType, title, mediaLink } = data;
-
-    // Create media element based on mediaType
-    this.$media = createElement(mediaType === 'image' ? 'img' : 'video');
-
-    if (mediaType === 'video') {
-      this.configureVideoElement(); // Configure video properties
+  static createMedia(data, photographer) {
+    const { mediaType } = data;
+    switch (mediaType) {
+      case 'image':
+        return new ImageMedia(data, photographer);
+      case 'video':
+        return new VideoMedia(data, photographer);
+      default:
+        throw new Error('Unsupported media type');
     }
-
-    // Set common attributes for both image and video
-    Object.assign(this.$media, {
-      src: mediaLink,
-      alt: `${title} by ${photographer.name}`,
-      'aria-label': `${title} by ${photographer.name}`,
-      tabindex: '0',
-    });
-  }
-
-  // Configure video element properties
-  configureVideoElement() {
-    Object.assign(this.$media, {
-      controls: false,
-      autoplay: false,
-      disablePictureInPicture: false,
-    });
-  }
-
-  // Return the created media element
-  createComponent() {
-    return this.$media;
   }
 }

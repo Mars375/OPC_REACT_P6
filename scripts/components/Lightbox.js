@@ -106,8 +106,8 @@ export class Lightbox {
       this.eventHandlers.push({ element, event, handler });
     });
 
-    const focusableElements = this.$lightboxInner.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    const firstFocusableElement = focusableElements[0];
+    const focusableElements = this.$lightboxInner.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    const firstFocusableElement = focusableElements[1];
     firstFocusableElement.focus();
 
     document.addEventListener('keydown', (event) => {

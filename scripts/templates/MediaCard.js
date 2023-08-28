@@ -25,7 +25,6 @@ export class MediaCard {
 
     const $likesIcon = createElement("i", {
       class: "fas fa-heart media-card__likes-icon",
-      'aria-label': "likes",
       tabIndex: "-1",
       ariaHidden: "true"
     });
@@ -52,7 +51,7 @@ export class MediaCard {
     });
     $likeWrapper.append($likeBtn, $likes);
 
-    const $title = createElement("h3", {
+    const $title = createElement("h2", {
       class: "media-card__title",
       'aria-label': `Photo Title: ${title}`,
       innerText: title
@@ -70,7 +69,8 @@ export class MediaCard {
 
   // Create the section displaying media (photo or video)
   createMediaSection() {
-    const $media = new MediaFactory(this._media, this._photographer).createComponent();
+    const $media = MediaFactory.createMedia(this._media, this._photographer);
+    const $mediaComponent = $media.createComponent();
 
     const $mediaSection = createElement("div", {
       class: "media-card__media",
@@ -78,7 +78,7 @@ export class MediaCard {
 
       tabIndex: "0"
     });
-    $mediaSection.append($media);
+    $mediaSection.append($mediaComponent);
 
     return $mediaSection;
   }

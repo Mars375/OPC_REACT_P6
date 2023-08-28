@@ -15,7 +15,8 @@ export class PhotographerSidebar {
     });
 
     const $likesContainer = createElement('div', {
-      class: 'photographer-sidebar__likes-container'
+      class: 'photographer-sidebar__likes-container',
+      'aria-label': 'likes',
     });
 
     // Create an element to display the total likes
@@ -27,7 +28,6 @@ export class PhotographerSidebar {
     // Create a heart icon
     const $heartIcon = createElement('i', {
       class: 'fas fa-heart',
-      'aria-label': 'likes',
     });
 
     // Create an element to display the price
