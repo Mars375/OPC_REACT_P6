@@ -6,7 +6,7 @@ import { CardFactory } from '../factories/CardFactory.js';
 class App {
   constructor() {
     // Initialize the query to fetch photographers' data from the JSON file
-    this.query = new Query('/P6/data/photographers.json');
+    this.query = new Query('./data/photographers.json');
 
     // Get the section element where photographer cards will be displayed
     this.photographerSection = document.querySelector('.photographer_section');
