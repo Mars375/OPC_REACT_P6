@@ -54,7 +54,9 @@ export class Lightbox {
       class: 'lightbox__caption',
     });
 
-    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index], this._photographer).createComponent();
+    this.$lightboxMediaContent = MediaFactory(this._medias[this._index], this._photographer);
+    this.$lightboxMediaComponent = this.$lightboxMediaContent.createComponent();
+
     this.$lightboxMediaContent.controls = true;
 
     this.$lightboxPrev = createLightboxButton('Previous caption', () => this.navigate(-1), null, 'lightbox__prev');
@@ -67,7 +69,7 @@ export class Lightbox {
       class: 'fas fa-chevron-right',
     });
 
-    $lightboxMedia.append(this.$lightboxMediaContent);
+    $lightboxMedia.append(this.$lightboxMediaComponent);
     this.$lightboxPrev.append($lightboxPrevIcon);
     this.$lightboxNext.append($lightboxNextIcon);
     $lightboxContent.append(this.$lightboxPrev, $lightboxMedia, this.$lightboxNext, this.$lightboxClose);
@@ -79,12 +81,13 @@ export class Lightbox {
 
   // Update the content of the lightbox media.
   updateMediaContent() {
-    this.$lightboxMediaContent = new MediaFactory(this._medias[this._index], this._photographer).createComponent();
+    this.$lightboxMediaContent = MediaFactory(this._medias[this._index], this._photographer);
+    this.$lightboxMediaComponent = this.$lightboxMediaContent.createComponent();
     this.$lightboxMediaContent.controls = true;
 
     const $lightboxMedia = this.$lightboxInner.querySelector('.lightbox__caption');
     $lightboxMedia.innerHTML = '';
-    $lightboxMedia.append(this.$lightboxMediaContent);
+    $lightboxMedia.append(this.$lightboxMediaComponent);
   }
 
   // Navigate to the previous or next media.
