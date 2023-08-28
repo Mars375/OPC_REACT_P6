@@ -10,8 +10,13 @@ export class CardFactory {
 
     // Depending on the type, create an instance of the corresponding card
     // This uses a ternary operator to conditionally choose the card type
-    return this.type === 'photographer' ?
-      new PhotographerCard(this.data) :
-      new MediaCard(this.data, this.photographer);
+    switch (this.type) {
+      case 'photographer':
+        return new PhotographerCard(this.data);
+      case 'media':
+        return new MediaCard(this.data, this.photographer);
+      default:
+        throw new Error(`Card type ${this.type} is not supported.`);
+    }
   }
 }
