@@ -16,7 +16,7 @@ export function createLightboxButton(ariaLabel, handler, icon = null, classList 
 }
 
 // Handle keydown events within the lightbox.
-export function handleKeydown(event, lightbox) {
+export function handlekeydown(event, lightbox) {
 
   if (event.key === 'Escape') {
     lightbox.closeLightbox();

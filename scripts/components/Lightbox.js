@@ -1,6 +1,6 @@
 import { createElement } from "../utils/createElement.js";
 import { MediaFactory } from "../factories/MediaFactory.js";
-import { createLightboxButton, handleKeydown, handleDocumentClick } from "../utils/lightboxUtils.js";
+import { createLightboxButton, handlekeydown, handleDocumentClick } from "../utils/lightboxUtils.js";
 
 export class Lightbox {
   constructor(medias, index, container, photographer) {
@@ -112,7 +112,7 @@ export class Lightbox {
     firstFocusableElement.focus();
 
     document.addEventListener('keydown', (event) => {
-      handleKeydown(event, this);
+      handlekeydown(event, this);
     });
 
     document.addEventListener('click', (event) => {
