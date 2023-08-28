@@ -19,6 +19,7 @@ class App {
   async getPhotographers() {
     try {
       const data = await this.query.fetch();
+      console.log(data.photographers);
       return data.photographers;
     } catch (error) {
       throw new Error(error); // Throw an error if fetching fails
