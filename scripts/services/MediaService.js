@@ -3,7 +3,7 @@ import { Media } from '../models/Media.js';
 
 export class MediaService {
   constructor() {
-    this.query = new Query('/P6/data/photographers.json');
+    this.query = new Query('./data/photographers.json');
   }
 
   async getMediasByPhotographerId(photographerId, photographer) {
