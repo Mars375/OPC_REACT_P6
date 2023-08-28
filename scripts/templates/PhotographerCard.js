@@ -9,6 +9,7 @@ export class PhotographerCard {
   getCardWrapper() {
     return createElement('div', {
       class: 'card-photographer',
+      tabindex: '0',
       'aria-label': `Photographer ${this._photographer.name}`
     });
   }
