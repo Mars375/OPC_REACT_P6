@@ -17,13 +17,11 @@ export class MediaRenderer {
 
       const mediaSection = card.querySelector('.media-card__media');
       mediaSection.addEventListener('click', () => {
-        console.log(index);
         const lightbox = new Lightbox(data, index, '.lightbox_modal', photographer);
         lightbox.init();
       });
 
-      mediaSection.addEventListener('keydown', (event) => {
-        console.log(index);
+      mediaSection.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
           const lightbox = new Lightbox(data, index, '.lightbox_modal', photographer);
           lightbox.init();
