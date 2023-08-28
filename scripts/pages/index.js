@@ -34,7 +34,6 @@ class App {
 
   // Show the loading spinner, fetch photographers' data, and display their cards
   async init() {
-    this.spinnerLoader.show();
     try {
       const photographers = await this.getPhotographers();
 
@@ -45,6 +44,7 @@ class App {
         fragment.appendChild(card);
       });
       this.photographerSection.appendChild(fragment);
+      this.spinnerLoader.show();
     } catch (error) {
       console.error('Error fetching photographers:', error);
     }

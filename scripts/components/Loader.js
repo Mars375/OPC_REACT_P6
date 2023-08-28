@@ -24,8 +24,6 @@ export class Loader {
 
   // Show the loader with a fade-out effect
   show() {
-    this.loaderContainer.style.display = 'flex';
-
     // Set a timeout to hide the loader and handle opacity transition
     setTimeout(() => {
       this.loaderContainer.style.opacity = '0';

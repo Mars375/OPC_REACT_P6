@@ -56,9 +56,9 @@ class App {
 
   // Initialize the app by fetching data and rendering the page
   async init() {
-    this.spinnerLoader.show();
     await this.getData();
     await this.renderPage();
+    this.spinnerLoader.show();
   }
 }
 
