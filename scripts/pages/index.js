@@ -34,7 +34,6 @@ class App {
 
   // Show the loading spinner, fetch photographers' data, and display their cards
   async init() {
-    console.log('Initializing app...');
     this.spinnerLoader.show();
     try {
       const photographers = await this.getPhotographers();
