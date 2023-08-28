@@ -3,7 +3,7 @@ import { Photographer } from "../models/Photographer.js";
 
 export class PhotographerService {
   constructor() {
-    this.query = new Query('/P6/data/photographers.json'); // Initialize the query to fetch photographers
+    this.query = new Query('./data/photographers.json'); // Initialize the query to fetch photographers
   }
 
   async getPhotographer(id) {
