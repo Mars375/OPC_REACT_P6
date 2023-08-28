@@ -69,8 +69,7 @@ export class MediaCard {
 
   // Create the section displaying media (photo or video)
   createMediaSection() {
-    const $media = MediaFactory.createMedia(this._media, this._photographer);
-    const $mediaComponent = $media.createComponent();
+    const $media = MediaFactory.createMedia(this._media, this._photographer).createComponent();
 
     const $mediaSection = createElement("div", {
       class: "media-card__media",
@@ -78,7 +77,7 @@ export class MediaCard {
 
       tabIndex: "0"
     });
-    $mediaSection.append($mediaComponent);
+    $mediaSection.append($media);
 
     return $mediaSection;
   }
