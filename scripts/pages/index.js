@@ -19,7 +19,6 @@ class App {
   async getPhotographers() {
     try {
       const data = await this.query.fetch();
-      console.log(data.photographers);
       return data.photographers;
     } catch (error) {
       throw new Error(error); // Throw an error if fetching fails
@@ -35,6 +34,7 @@ class App {
 
   // Show the loading spinner, fetch photographers' data, and display their cards
   async init() {
+    console.log('Initializing app...');
     this.spinnerLoader.show();
     try {
       const photographers = await this.getPhotographers();
