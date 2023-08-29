@@ -1,6 +1,5 @@
 /* Importing photographer-specific styles */
 @import url("photographer.css");
-@import url("reset.css");
 
 /* Global Styles */
 body {
@@ -148,4 +147,52 @@ h1 {
 .card-photographer__price {
 	color: #757575;
 	font-size: 0.8rem;
+}
+
+/* Reset */
+
+/* Remove default list styles */
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+	margin: 0;
+}
+
+/* Remove default padding */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+	padding: 0;
+}
+
+/* Remove default button styles */
+button {
+	border: none;
+	background: none;
+	padding: 0;
+}
+
+/* add focus outline to elements */
+a:focus,
+button:focus {
+	outline: 2px solid black;
 }

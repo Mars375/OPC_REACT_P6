@@ -11,7 +11,6 @@ export class BaseMedia {
     Object.assign(this.$media, {
       src: mediaLink,
       alt: `${title} by ${photographer.name}`,
-      tabindex: '0',
     });
   }
 
@@ -21,6 +20,7 @@ export class BaseMedia {
   }
 
   createComponent() {
+    this.$media.tabIndex = 0;
     return this.$media;
   }
 }

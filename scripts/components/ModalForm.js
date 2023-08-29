@@ -70,6 +70,15 @@ export class ModalForm {
     // Handle form submission and modal closure
     $contactForm.addEventListener('submit', (event) => {
       event.preventDefault();
+
+      // Get the form data
+      const formData = new FormData($contactForm);
+
+      // Create an object from the form data
+      const formObject = Object.fromEntries(formData.entries());
+
+      // Log the form data
+      console.log(formObject);
       this.closeModal();
     });
 
@@ -132,6 +141,10 @@ export class ModalForm {
 
   // Close the modal and remove event listeners
   closeModal() {
+
+    // clear the form
+    const $form = document.querySelector('.modal__form');
+    $form.reset();
     this.$modal.style.display = 'none';
     document.body.classList.remove('overlay-active');
     this.$closeModalButton.removeEventListener('click', this.closeModal);
