@@ -86,7 +86,7 @@ export class Dropdown {
       this.$dropdownList.append(dropdownItem);
     });
 
-    const dropdownItemsIcon = createElement('i', {
+    this.dropdownItemsIcon = createElement('i', {
       class: 'fas fa-chevron-up dropdown__icon',
       'aria-hidden': 'true',
     });
@@ -95,12 +95,22 @@ export class Dropdown {
     this.$dropdownButton.addEventListener('click', () => {
       this.handleDropdownButtonClick(this.$dropdownButton, this.$dropdownList);
     });
+    // Handle open/close dropdown list on keyup event for the dropdown button
+    this.$dropdownButton.addEventListener('keyup', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this.handleDropdownButtonClick(this.$dropdownButton, this.$dropdownList);
+      }
+    });
+
+    // Handle keydown event for the dropdown list
+    this.$dropdownList.addEventListener('keyup', this.handleKeyboardNavigation.bind(this));
 
     const dropdown = createElement('div', {
       class: 'dropdown',
     });
 
-    this.$dropdownList.firstElementChild.append(dropdownItemsIcon);
+    this.$dropdownList.firstElementChild.append(this.dropdownItemsIcon);
     this.$dropdownButton.append(this.$dropdownText, dropdownIcon);
     dropdown.append(this.$dropdownButton, this.$dropdownList);
     this.$containerSelector.append(dropdownLabel, dropdown);
@@ -122,6 +132,7 @@ export class Dropdown {
       const dropdownItem = this.createDropdownItem(option);
       this.$dropdownList.append(dropdownItem);
     });
+    this.$dropdownList.firstElementChild.append(this.dropdownItemsIcon);
   }
 
   // Handle dropdown item click and update sorting and rendering
@@ -135,6 +146,51 @@ export class Dropdown {
     this.reorderOptions();
     this.updateDropdownList();
   }
+
+  // Handle dropdown item keydown event
+  handleKeyboardNavigation(event) {
+    const focusableElements = this.$dropdownList.querySelectorAll('.dropdown__item');
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const currentFocused = document.activeElement;
+
+    switch (event.key) {
+      case 'Tab':
+        if (event.shiftKey && currentFocused === firstFocusable) {
+          event.preventDefault();
+          lastFocusable.focus();
+        } else if (!event.shiftKey && currentFocused === lastFocusable) {
+          event.preventDefault();
+          firstFocusable.focus();
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (currentFocused === firstFocusable) {
+          lastFocusable.focus();
+        } else {
+          const prevIndex = Array.from(focusableElements).indexOf(currentFocused) - 1;
+          focusableElements[prevIndex].focus();
+        }
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        if (currentFocused === lastFocusable) {
+          firstFocusable.focus();
+        } else {
+          const nextIndex = Array.from(focusableElements).indexOf(currentFocused) + 1;
+          focusableElements[nextIndex].focus();
+        }
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.handleDropdownItemClick(currentFocused.innerText);
+        break;
+      default:
+        break;
+    }
+  }
+
 
   // Sort and render media based on selected option
   sortAndRenderMedia(option) {
