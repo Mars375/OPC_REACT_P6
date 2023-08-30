@@ -54,7 +54,8 @@ export class MediaCard {
     const $title = createElement("h2", {
       class: "media-card__title",
       'aria-label': `Photo Title: ${title}`,
-      innerText: title
+      innerText: title,
+      tabIndex: "0"
     });
 
     const $informationSection = createElement("div", {
