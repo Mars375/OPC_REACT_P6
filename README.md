@@ -4,16 +4,42 @@
 FishEye is an online platform dedicated to showcasing photographers and their works. It provides a user-friendly experience for photography enthusiasts, allowing them to discover photographer portraits, sort works by date, popularity, or title, and even contact artists. This project was developed as part of a training program focused on coding best practices, object-oriented programming (OOP), and accessibility.
 
 
-## Badges
+## Tech Stack
 
 [![HTML](https://img.shields.io/badge/HTML-5-orange?style=for-the-badge&logo=html5)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS](https://img.shields.io/badge/CSS-3-blue?style=for-the-badge&logo=css3)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-
 ## Demo
 
 [Click here for a demo](https://opc-react-p6-jzt2nr32f-mars375.vercel.app/)
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Mars375/OPC_REACT_P6.git
+```
+
+Go to the project directory
+
+```bash
+  cd OPC_REACT_P6
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  start index.html
+```
 
 
 ## 🔗 Links
