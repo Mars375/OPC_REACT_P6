@@ -4,6 +4,11 @@
 FishEye is an online platform dedicated to showcasing photographers and their works. It provides a user-friendly experience for photography enthusiasts, allowing them to discover photographer portraits, sort works by date, popularity, or title, and even contact artists. This project was developed as part of a training program focused on coding best practices, object-oriented programming (OOP), and accessibility.
 
 
+## Project Status
+
+**Status:** [Completed]
+
+
 ## Tech Stack
 
 [![HTML](https://img.shields.io/badge/HTML-5-orange?style=for-the-badge&logo=html5)](https://developer.mozilla.org/en-US/docs/Web/HTML)
