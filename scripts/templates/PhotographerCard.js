@@ -20,27 +20,24 @@ export class PhotographerCard {
 
     const informationSection = createElement('div', {
       class: 'card-photographer__information',
-      'aria-label': 'Plus d&apos;informations',
+      'aria-label': "Plus d'informations",
       tabindex: '0'
     });
 
     const locationElement = createElement('p', {
       class: 'card-photographer__location',
-      'aria-roledescription': 'Localisation de l&apos;artiste',
       'aria-label': 'Ville et Pays',
       innerText: location
     });
 
     const taglineElement = createElement('p', {
       class: 'card-photographer__tagline',
-      'aria-roledescription': 'Tagline de l&apos;artiste',
       'aria-label': 'Tagline',
       innerText: tagline
     });
 
     const priceElement = createElement('p', {
       class: 'card-photographer__price',
-      'aria-roledescription': 'Tarif journalier de l&apos;artiste',
       'aria-label': 'Tarif journalier',
       innerText: price
     });
@@ -56,7 +53,8 @@ export class PhotographerCard {
       class: 'card-photographer__link',
       href: `./photographer.html?id=${this._photographer.id}`,
       'aria-label': `Photographer ${this._photographer.name}`,
-      tabindex: '0'
+      tabindex: '0',
+      title: `Photographer ${this._photographer.name}`
     });
 
     const portraitWrapper = createElement('div', {
