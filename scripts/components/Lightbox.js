@@ -50,9 +50,18 @@ export class Lightbox {
       class: 'lightbox__content',
     });
 
-    const $lightboxMedia = createElement('div', {
+    const $lightboxMedia = createElement('p', {
       class: 'lightbox__caption',
     });
+
+    const $lightboxMediaAndControls = createElement('div', {
+      class: 'lightboxMediaAndControls'
+    })
+
+    this.$mediaTitle = createElement('p', {
+      class: 'lightbox__title',
+      innerText: this._medias[this._index].title
+    })
 
     this.$lightboxMediaContent = MediaFactory.createMedia(this._medias[this._index], this._photographer).createComponent();
 
@@ -71,9 +80,10 @@ export class Lightbox {
     $lightboxMedia.append(this.$lightboxMediaContent);
     this.$lightboxPrev.append($lightboxPrevIcon);
     this.$lightboxNext.append($lightboxNextIcon);
-    $lightboxContent.append(this.$lightboxPrev, $lightboxMedia, this.$lightboxNext, this.$lightboxClose);
+    $lightboxMediaAndControls.append(this.$lightboxPrev, $lightboxMedia, this.$lightboxNext)
+    $lightboxContent.append($lightboxMediaAndControls, this.$lightboxClose, this.$mediaTitle);
     this.$lightboxClose.append($lightboxCloseIcon);
-    this.$lightboxInner.appendChild($lightboxContent);
+    this.$lightboxInner.append($lightboxContent);
 
     return this.$lightboxInner;
   }
@@ -82,6 +92,8 @@ export class Lightbox {
   updateMediaContent() {
     this.$lightboxMediaContent = MediaFactory.createMedia(this._medias[this._index], this._photographer).createComponent();
     this.$lightboxMediaContent.controls = true;
+
+    this.$mediaTitle.innerText = this._medias[this._index].title
 
     const $lightboxMedia = this.$lightboxInner.querySelector('.lightbox__caption');
     $lightboxMedia.innerHTML = '';

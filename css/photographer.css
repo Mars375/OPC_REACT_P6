@@ -64,8 +64,8 @@
 /* Styles for the media cards */
 .media-wrapper {
 	position: relative;
-	display: grid;
-	grid-template-columns: repeat(3, 300px);
+	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	gap: 1.5rem;
 	margin: 0 100px;
@@ -92,6 +92,7 @@ video {
 }
 
 .media-card__title {
+	max-width: 225px;
 	font-size: 1.5rem;
 	font-weight: normal;
 	color: #901c1c;
@@ -260,7 +261,6 @@ form button {
 	background-color: #fff;
 	max-width: 77rem;
 	width: 90%;
-	padding: 0 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
@@ -274,10 +274,15 @@ form button {
 }
 
 .lightbox__content {
+	width: fit-content;
+	margin: 1.35rem auto;
+}
+
+.lightbox__title {
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	max-height: 70vh;
+	color: #901c1c;
+	font-size: 1.5rem;
+	margin-left: 45px;
 }
 
 .lightbox__prev,
@@ -299,6 +304,10 @@ form button {
 .lightbox__caption {
 	text-align: center;
 	color: #888;
+}
+
+.lightboxMediaAndControls {
+	display: flex;
 }
 
 .lightbox__caption img,
